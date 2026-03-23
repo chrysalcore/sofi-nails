@@ -1,0 +1,17 @@
+'use client'
+
+export default function BodyCTA() {
+    const onClick = () => {
+        window.open('tel:12144159107', '_blank', 'noopener, noreferrer')
+    }
+
+    return (
+        <div className="fixed bottom-6 right-6 lg:hidden z-50">
+            <button className="m-0 fill-white bg-main shadow-sm/10 button p-4" onClick={onClick}>
+                <svg xmlns="http://www.w3.org/2000/svg" width={28} height={28} viewBox="0 -960 960 960">
+                    <path d="M798-120q-125 0-247-54.5T329-329Q229-429 174.5-551T120-798q0-18 12-30t30-12h162q14 0 25 9.5t13 22.5l26 140q2 16-1 27t-11 19l-97 98q20 37 47.5 71.5T387-386q31 31 65 57.5t72 48.5l94-94q9-9 23.5-13.5T670-390l138 28q14 4 23 14.5t9 23.5v162q0 18-12 30t-30 12Z"/>
+                </svg>
+            </button>
+        </div>
+    )
+}

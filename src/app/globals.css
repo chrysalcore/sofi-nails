@@ -1,35 +1,85 @@
+@import 'tailwindcss';
+
+@theme {
+    --font-quicksand: 'Quicksand', sans-serif;
+    --font-worksans: 'Work Sans';
+
+    --color-main: #ff4030;
+    --color-secondary: #c39870;
+    --color-light: #f0f0f0;
+    --color-dark: #6e5b3d;
+}
+
+@layer components {
+    .button {
+        @apply py-3 px-12 font-bold text-sm text-center uppercase tracking-widest rounded-2xl cursor-pointer;
+    }
+}
+
+@layer utilities {
+    .scroll-none {
+        scrollbar-width: none;
+    }
+
+    .bg-hero-vertical {
+        background: linear-gradient(var(--color-white) 30%, #fff8), url('/imgs/back-hero.webp');
+    }
+
+    .bg-hero-horizontal {
+        background: linear-gradient(to right, var(--color-white) 40%, #fff8), url('/imgs/back-hero.webp');
+    }
+
+    .bg-faq {
+        background: linear-gradient(135deg, #c3987088, transparent 60%);
+    }
+
+    .bt-shape::before {
+        content: '';
+        @apply h-37 absolute -left-0.5 -right-0.5 -bottom-0.5 z-30 pointer-events-none bg-no-repeat bg-position-[0%_100%] bg-[url('/icons/shape.svg')] bg-size-[200%_150px];
+    }
+
+    .tp-shape::after {
+        content: '';
+        @apply h-37 absolute -left-0.5 -right-0.5 top-0 z-30 pointer-events-none bg-no-repeat bg-position-[0%_100%] bg-[url('/icons/shape.svg')] bg-size-[200%_150px] rotate-180;
+    }
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
+/** Calendar Styles **/
+
+.calendar:nth-child(odd) {
+    @apply pb-24 pt-48 max-w-dvw text-center bg-white text-secondary;
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.calendar .section-header {
+    @apply grow basis-[min(15rem,100%)];
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+.calendar > div {
+    @apply flex flex-col gap-12 grow basis-[min(15rem,100%)];
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+/************************************* Footer Styles ****************************************/
+
+
+.footer-rights {
+    @apply flex flex-col items-center gap-2;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+.footer-rights__copy, .footer-rights__author {
+    @apply block text-sm text-center;
+}
+
+.footer-rights__copy {
+    @apply uppercase;
+}
+
+.footer-rights__author a {
+    @apply text-sm font-bold underline
 }
