@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   description: "Professional nail art, eyelash extensions, facial treatments & laser hair removal at 2928 Bent Tree Cir, Salem. 5 Stars Rated. Book your luxury experience today!",
   keywords: "Sofi's Spa, nails, lashes, spa, eyebrowns, facials, manicure, pedicure, laser hair removal, hair removal, nail salon Salem VA, eyelash extensions, facial treatments, Roanoke Valley",
   openGraph: {
-    title: "Sofía Nails & Lashes Spa - Salem's Premier Beauty Destination",
+    title: "Sofi Nails & Lashes Spa - Salem's Premier Beauty Destination",
     description: 'Certified technicians, luxury experience & premium products. Transforming beauty routines since 2020.',
     images: 'https://sofinailsandlashesspa.com/opengraph-image.webp',
     url: 'https://sofinailsandlashesspa.com',
