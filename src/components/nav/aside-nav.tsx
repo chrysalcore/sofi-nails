@@ -18,8 +18,8 @@ export default function AsideNav() {
                     <path d="M160-240q-17 0-28.5-11.5T120-280q0-17 11.5-28.5T160-320h640q17 0 28.5 11.5T840-280q0 17-11.5 28.5T800-240H160Zm0-200q-17 0-28.5-11.5T120-480q0-17 11.5-28.5T160-520h640q17 0 28.5 11.5T840-480q0 17-11.5 28.5T800-440H160Zm0-200q-17 0-28.5-11.5T120-680q0-17 11.5-28.5T160-720h640q17 0 28.5 11.5T840-680q0 17-11.5 28.5T800-640H160Z"/>
                 </svg>
             </button>
-            <nav className={`flex lg:hidden justify-center items-end px-2 py-4 w-full max-h-0 absolute bg-[color-mix(in_srgb,#c39870_60%,#fff)] overflow-clip left-0 top-0 -z-50 transition-all ${active? 'pt-20 max-h-[20dvh]' : ''}`}>
-                <ul className="flex gap-6">
+            <nav className={`flex lg:hidden justify-center items-end py-4 w-full max-h-0 absolute bg-[color-mix(in_srgb,#c39870_60%,#fff)] overflow-clip left-0 top-0 -z-50 transition-all ${active? 'pt-20 max-h-[20dvh]' : ''}`}>
+                <ul className="flex px-[40dvw] max-w-dvw gap-6 overflow-auto scroll-none snap-mandatory snap-center">
                     {navLinkList.map(item => {
                         return (
                             <NavLink key={item.text} {...item} />

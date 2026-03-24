@@ -27,7 +27,7 @@ export const inputsList: Input[] = [
         label: 'Date',
         name: 'date',
         type: 'datetime-local',
-        placeholder: '',
+        placeholder: '01/01/2000',
         isInLine: true
     },
     {

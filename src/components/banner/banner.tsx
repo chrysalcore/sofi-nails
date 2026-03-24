@@ -8,7 +8,7 @@ export default function Banner() {
             {data.map(item => {
                 return (
                     <li className='grow basis-[min(15rem,100%)]' key={item.name}>
-                        <a className='flex flex-col items-center gap-2 text-center' href={item.href} target="_blank" rel="noopener noreferrer">
+                        <a className='flex flex-col items-center gap-2 text-center' href={item.href} rel="noopener noreferrer">
                             {item.icon}
                             <div className="flex flex-col items-center">
                                 <h2 className='uppercase font-bold tracking-widest text-sm'>{item.name}</h2>
