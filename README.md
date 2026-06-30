@@ -13,11 +13,36 @@ Live Link: [https://sofinailsandlashesspa.com](https://sofinailsandlashesspa.com
 
 ## Description
 
-**Sofi Nails & Lashes Spa Front-end** is built with Next.js to improve SEO, performance, and maintainability for the beauty salon Sofi Nails & Lashes Spa in Salem, Virginia.
+**Sofi Nails & Lashes Spa Front-end** is a production business website built with Next.js 14, TypeScript, and the App Router for Sofi Nails & Lashes Spa — a beauty salon in Salem, Virginia. The stack prioritizes SEO, performance, and maintainability through Server Components, static and dynamic page generation, and Vercel deployment.
 
-The application is focused on showcasing services, categories, reviews, and contact information. It uses dynamic routes for service pages and static rendering where appropriate for better search engine indexing and client experience.
+The site showcases services, categories, reviews, FAQs, and contact information. Dynamic routes power individual service category pages (`/services/nails`, `/services/lashes`, etc.), while static rendering and metadata APIs keep pages fast and fully indexable. Local SEO is reinforced with geo-targeted metadata, keyword-rich titles and descriptions, an auto-generated `sitemap.ts`, `robots.ts`, Open Graph and Twitter cards, and per-route OG image generation.
 
-The code is built with React components, Next.js routing and data handling, responsive design, accessibility, and modern web standards. The project emphasizes local SEO, fast loading times, and a mobile-friendly user experience.
+Since launch (September 2025 – June 2026), Google Analytics confirms the SEO strategy is delivering measurable results:
+
+| Metric | Result |
+| :--- | :--- |
+| Active users | **1,600+** |
+| New users | **1,595** |
+| Page views | **5,615+** |
+| Sessions | **2,100+** |
+| Avg. engagement time | **59 seconds** |
+| Reservation form starts | **129** |
+
+**Organic search is the #1 acquisition channel**, driving ~700 active users and ~1,100 sessions via `google / organic` — ahead of direct and social traffic. This validates the local SEO focus on Salem, VA keywords (e.g. the homepage title *"Beauty Salon in Salem VA"*, which alone earned **4,100+ views** and **1,500+ active users**).
+
+Top-performing pages reflect strong search intent and content relevance:
+
+| Page | Views | Bounce rate |
+| :--- | :--- | :--- |
+| Home (`/`) | 2,776 | 41.2% |
+| Nails services (`/services/nails`) | 877 | — |
+| Reservation (`/reservation`) | 781 | 8.4% |
+| Lashes services (`/services/lashes`) | 311 | — |
+| Luxe Hands & Feet Rituals | 439 | 3.0% |
+
+Low bounce rates on service and reservation pages (3–8%) indicate visitors are finding relevant content and moving toward booking. Social channels (Facebook, Instagram) complement organic search, contributing ~400–450 new users alongside direct traffic.
+
+Built with React components, responsive TailwindCSS styling, accessibility in mind, and Google Analytics integration via `@next/third-parties` for ongoing performance tracking.
 
 ## Main Features
 
