@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import { useSearchParams } from "next/navigation";
 import { inputsList } from "../../_lib/data/inputs";
 import { sendEmail } from "../../_lib/helper/actions";
 import Input from "./input";
@@ -9,11 +10,17 @@ const initialState = { success: false, error: null }
 
 function Form() {
     const [state, action, isLoading] = useActionState(sendEmail, initialState)
+    const searchParams = useSearchParams()
+    const defaultSubject = searchParams.get("subject") ?? ""
 
     return (
         <form className='self-start grow basis-[min(15rem,100%)] grid grid-cols-1 gap-4 p-4 w-full text-secondary bg-secondary/25 rounded-lg' action={action}>
             {inputsList.map(item => (
-                <Input {...item} key={item.name}/>
+                <Input
+                    {...item}
+                    key={`${item.name}`}
+                    defaultValue={item.name === "subject" ? defaultSubject : undefined}
+                />
             ))}
             <button disabled={isLoading} className="flex justify-center items-center gap-2 button text-white fill-white bg-main rounded-2xl" type="submit">
                 {isLoading? 'Submiting' : 'Submit'}

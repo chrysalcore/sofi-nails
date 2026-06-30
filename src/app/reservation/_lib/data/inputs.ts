@@ -5,6 +5,7 @@ export interface Input {
     placeholder: string
     isInLine: boolean
     minLength?: number
+    defaultValue?: string
 }
 
 export const inputsList: Input[] = [

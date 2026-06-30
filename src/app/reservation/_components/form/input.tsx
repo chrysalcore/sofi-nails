@@ -1,6 +1,6 @@
 import { type Input } from "../../_lib/data/inputs";
 
-export default function Input({ name, type, placeholder, isInLine, minLength}: Input) {
+export default function Input({ name, type, placeholder, isInLine, minLength, defaultValue}: Input) {
     return (
         <label className='label flex flex-col' htmlFor={name}>
             {isInLine? 
@@ -12,6 +12,7 @@ export default function Input({ name, type, placeholder, isInLine, minLength}: I
                     placeholder={placeholder}
                     required
                     minLength={minLength}
+                    defaultValue={defaultValue}
                 /> :
                 <textarea
                     className="px-4 py-3 text-dark border border-secondary/50 rounded-lg focus-visible:outline-none focus-visible:border-2 focus-visible:border-secondary placeholder:text-secondary/80 resize-none overflow-y-auto invalid:not-empty:text-main invalid:not-empty:border-main invalid:focus-visible:not-empty:border-main transition-colors"
@@ -20,6 +21,7 @@ export default function Input({ name, type, placeholder, isInLine, minLength}: I
                     placeholder={placeholder}
                     rows={6}
                     required
+                    defaultValue={defaultValue}
                 ></textarea>
             }
         </label>

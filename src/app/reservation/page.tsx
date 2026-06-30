@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Calendar from "./_components/calendar";
 import Form from "./_components/form/form";
 import ContactInfo from "./_components/contact/contact-info";
@@ -35,7 +36,9 @@ export default function ReservationPage() {
             <Calendar />
             <section className="flex flex-wrap gap-16 overflow-clip relative text-secondary bg-white">
                 <ContactInfo />
-                <Form />
+                <Suspense fallback={null}>
+                    <Form />
+                </Suspense>
             </section>
         </div>
     )
