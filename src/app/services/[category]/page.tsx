@@ -1,33 +1,38 @@
-import { Metadata, ResolvingMetadata } from "next"
+import { Metadata } from "next"
 import Service from "./_components/service"
 import { serviceList } from "@/app/_lib/data/services"
 import { categories } from "@/app/_lib/data/categories"
 import { serviceKeywords } from "@/app/_lib/keywords"
 
-type Props = { 
-    params: Promise<{ category: string }> 
+const SITE_NAME = 'Sofi Nails & Lashes Spa';
+
+type Props = {
+    params: Promise<{ category: string }>
 }
 
-export async function generateMetadata({params}: Props, parent: ResolvingMetadata): Promise<Metadata> {
+export async function generateMetadata({params}: Props): Promise<Metadata> {
     const { category: path } = await params
-    const metaParent = await parent
     const category = categories.get(path)
+    const title = `${category?.title} | ${SITE_NAME}`
 
     return {
-        title: `${category?.title} | ${metaParent.title?.absolute.split('|')[1]}`,
+        title,
         description: category?.desc,
         keywords: serviceKeywords[path],
+        alternates: {
+            canonical: `/services/${path}`,
+        },
         openGraph: {
-            title: `${category?.title} | ${metaParent.title?.absolute.split('|')[1]}`,
+            title,
             description: category?.desc,
             url: `https://sofinailsandlashesspa.com/services/${path}`,
-            siteName: 'Sofi Nails & Lashes Spa',
+            siteName: SITE_NAME,
             locale: 'en_US',
             type: 'website',
         },
         twitter: {
             card: 'summary_large_image',
-            title: `${category?.title} | ${metaParent.title?.absolute.split('|')[1]}`,
+            title,
             description: category?.desc,
         },
     }

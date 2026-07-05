@@ -2,10 +2,11 @@ import { categories } from "@/app/_lib/data/categories"
 import { ImageResponse } from "next/og"
 import { readFile } from "node:fs/promises"
 import { join } from "node:path"
+import sharp from "sharp"
 
 export const size = {
-    width: 288,
-    height: 115.2
+    width: 1200,
+    height: 630
 }
 
 export const contentType = 'image/png'
@@ -13,11 +14,12 @@ export const contentType = 'image/png'
 export default async function Image({ params }: { params: Promise<{ category: string }> }) {
     const { category: path } = await params
     const category = categories.get(path)
-    const image = await readFile(join(process.cwd(), `public/imgs/${category?.img}`), 'base64')
+    const source = await readFile(join(process.cwd(), `public/imgs/${category?.img}`))
+    const png = await sharp(source).resize(size.width, size.height, { fit: 'cover' }).png().toBuffer()
 
     return new ImageResponse((
-        <div className="flex w-72 overflow-clip aspect-5/2 bg-white">
-            <img src={`data:image/png;base64,${image}`} alt={`${category?.name} image`} width={288} height={115.2} />
+        <div style={{ display: 'flex', width: size.width, height: size.height, overflow: 'hidden' }}>
+            <img src={`data:image/png;base64,${png.toString('base64')}`} alt={`${category?.name} image`} width={size.width} height={size.height} />
         </div>
-    ))
+    ), size)
 }

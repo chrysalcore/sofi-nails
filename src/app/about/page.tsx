@@ -10,6 +10,9 @@ export const metadata: Metadata = {
     title: `About | Sofi Nails & Lashes Spa`,
     description: `Sofi Nails & Lashes Spa is located in Salem, VA (${address}). Certified technicians and premium products, transforming beauty routines since 2020. Open ${hours}.`,
     keywords: "Sofi Nails & Lashes Spa, about, nails, lashes, spa, salon Salem VA, beauty salon, eyelash extensions, facial treatments",
+    alternates: {
+        canonical: '/about',
+    },
     openGraph: {
         title: `About | Sofi Nails & Lashes Spa`,
         description: `Sofi Nails & Lashes Spa is located in Salem, VA (${address}). Certified technicians and premium products, transforming beauty routines since 2020. Open ${hours}.`,
@@ -17,13 +20,13 @@ export const metadata: Metadata = {
         siteName: 'Sofi Nails & Lashes Spa',
         locale: 'en_US',
         type: 'website',
-        images: 'https://sofinailsandlashesspa.com/opengraph-image.webp',
+        images: 'https://sofinailsandlashesspa.com/opengraph-image.jpg',
     },
     twitter: {
         card: 'summary_large_image',
         title: `About | Sofi Nails & Lashes Spa`,
         description: `Sofi Nails & Lashes Spa is located in Salem, VA (${address}). Certified technicians and premium products, transforming beauty routines since 2020. Open ${hours}.`,
-        images: 'https://sofinailsandlashesspa.com/opengraph-image.webp',
+        images: 'https://sofinailsandlashesspa.com/opengraph-image.jpg',
     }
 };
 
