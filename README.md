@@ -2,9 +2,8 @@
 
 Business website for Sofi Nails & Lashes Spa beauty salon with all their services, categories, reviews and contact info.
 
-[![Next.js](https://img.shields.io/badge/Next.js_14.2.5-black)](https://nextjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript_5.5-blue)](https://www.typescriptlang.org/)
-[![JavaScript](https://img.shields.io/badge/JavaScript-yellow)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/)
+[![Next.js](https://img.shields.io/badge/Next.js_16.2.9-black)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript_5.9-blue)](https://www.typescriptlang.org/)
 [![License](https://img.shields.io/badge/Polyform_Perimeter_License_1.0.0-red)](LICENSE)
 
 ## Preview
@@ -13,7 +12,7 @@ Live Link: [https://sofinailsandlashesspa.com](https://sofinailsandlashesspa.com
 
 ## Description
 
-**Sofi Nails & Lashes Spa Front-end** is a production business website built with Next.js 14, TypeScript, and the App Router for Sofi Nails & Lashes Spa — a beauty salon in Salem, Virginia. The stack prioritizes SEO, performance, and maintainability through Server Components, static and dynamic page generation, and Vercel deployment.
+**Sofi Nails & Lashes Spa Front-end** is a production business website built with Next.js, TypeScript, and the App Router for Sofi Nails & Lashes Spa — a beauty salon in Salem, Virginia. The stack prioritizes SEO, performance, and maintainability through Server Components, static and dynamic page generation, and Vercel deployment.
 
 The site showcases services, categories, reviews, FAQs, and contact information. Dynamic routes power individual service category pages (`/services/nails`, `/services/lashes`, etc.), while static rendering and metadata APIs keep pages fast and fully indexable. Local SEO is reinforced with geo-targeted metadata, keyword-rich titles and descriptions, an auto-generated `sitemap.ts`, `robots.ts`, Open Graph and Twitter cards, and per-route OG image generation.
 
@@ -51,15 +50,25 @@ Built with React components, responsive TailwindCSS styling, accessibility in mi
 - Static and dynamic page generation for services and categories
 - Responsive design with CSS modules or global styles
 - SEO-friendly metadata and Open Graph tags
+- Reservation form powered by a Next.js Server Action that emails the salon via Resend
+
+## Reservation Form & Email Notifications
+
+The booking flow (`/reservation`) is built entirely with a Next.js Server Action — no external API route or client-side fetch involved.
+
+- `sendEmail` ([`src/app/reservation/_lib/helper/actions.tsx`](src/app/reservation/_lib/helper/actions.tsx)) is a `'use server'` action wired to the form via `useActionState`. It trims and validates the submitted fields (name, email, date, subject, description) and returns `{ success, error }` state consumed directly by the form UI — no `try/catch` on the client.
+- On success, it renders a React email template ([`email.tsx`](src/app/reservation/_components/form/email.tsx)) to static markup with `react-dom/server` and sends it through the [Resend](https://resend.com/) API, replying-to the customer's own address so the salon can respond directly from their inbox.
+- Requires a `RESEND_API_KEY` environment variable (see [Local Installation](#local-installation-and-use) below).
 
 ## Technologies Used
 
 | Category | Technologies |
 | :--- | :--- |
-| Framework | Next.js 14.2.5 |
-| Language | TypeScript, JavaScript |
+| Framework | Next.js 16.2.9 |
+| Language | TypeScript |
 | Styling | CSS, TailwindCSS |
 | Routing | Next.js App Router |
+| Backend | Server Actions, Resend (transactional email) |
 | Tools | ESLint, Prettier |
 | Version Control | Git, GitHub |
 | Deployment | Vercel |
@@ -89,14 +98,22 @@ Follow these steps to run the project on your local machine.
     # or pnpm install
     ```
 
-3. Run development mode
+3. Configure environment variables
+
+    Create a `.env.local` file in the project root with your [Resend](https://resend.com/) API key, used by the reservation form's Server Action to send emails:
+
+    ```bash
+    RESEND_API_KEY=your_resend_api_key
+    ```
+
+4. Run development mode
 
     ```bash
     npm run dev
     # or pnpm dev
     ```
 
-4. Build for production
+5. Build for production
 
     ```bash
     npm run build
