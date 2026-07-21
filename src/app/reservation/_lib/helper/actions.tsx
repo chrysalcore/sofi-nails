@@ -1,5 +1,7 @@
 "use server";
 
+import { reservationSchema } from "../data/schema";
+
 export async function sendEmail(prevSate: unknown, formData: FormData) {
     const { Resend } = await import("resend");
     const { default: EmailTemplate } =
@@ -8,24 +10,19 @@ export async function sendEmail(prevSate: unknown, formData: FormData) {
 
     const resend = new Resend(process.env.RESEND_API_KEY!);
 
-    const name = formData.get("name")?.toString().trim() ?? "";
-    const email = formData.get("email")?.toString().trim() ?? "";
-    const date = formData.get("date")?.toString().trim() ?? "";
-    const subject = formData.get("subject")?.toString().trim() ?? "";
-    const description = formData.get("description")?.toString().trim() ?? "";
+    const parsed = reservationSchema.safeParse({
+        name: formData.get("name"),
+        email: formData.get("email"),
+        date: formData.get("date"),
+        subject: formData.get("subject"),
+        description: formData.get("description"),
+    });
 
-    if (name.length < 3)
-        return {
-            success: false,
-            error: "Name must be 3 or more letters" + name,
-        };
-    else if (subject.length < 10)
-        return {
-            success: false,
-            error:
-                "Subject must be 10 or more characters. Be more descriptive!" +
-                subject,
-        };
+    if (!parsed.success) {
+        return { success: false, error: parsed.error.issues[0].message };
+    }
+
+    const { name, email, date, subject, description } = parsed.data;
 
     const response = await resend.emails.send({
         from: "Sofi Nails Contact Email <contact@sofinailsandlashesspa.com>",
