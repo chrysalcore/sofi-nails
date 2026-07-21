@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 
 import Header from "@/components/header/header";
@@ -7,6 +6,7 @@ import Hero from "@/components/hero/hero";
 import Banner from "@/components/banner/banner";
 import Footer from "@/components/footer/footer";
 import BodyCTA from "@/components/global/body-cta";
+import DeferredAnalytics from "@/components/global/deferred-analytics";
 import localFont from "next/font/local";
 import { preload } from "react-dom";
 import { contactItemList } from "@/lib/data/contact";
@@ -106,7 +106,7 @@ export default function RootLayout({
 
     return (
         <html lang="en">
-            <GoogleAnalytics gaId="G-44N0ZCHY3Z" />
+            <DeferredAnalytics gaId="G-44N0ZCHY3Z" />
             <body className={`text-dark/80 ${worksans.className}`}>
                 <script
                     type="application/ld+json"
