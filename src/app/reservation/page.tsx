@@ -1,5 +1,4 @@
 import { Suspense } from "react";
-import Calendar from "./_components/calendar";
 import Form from "./_components/form/form";
 import ContactInfo from "./_components/contact/contact-info";
 import type { Metadata } from "next";
@@ -43,7 +42,6 @@ export const metadata: Metadata = {
 export default function ReservationPage() {
     return (
         <div className="bt-shape tp-shape relative flex flex-col gap-32 px-4 py-56 lg:px-[15dvw]">
-            <Calendar />
             <section className="text-secondary relative flex flex-wrap gap-16 overflow-clip bg-white">
                 <ContactInfo />
                 <Suspense fallback={null}>

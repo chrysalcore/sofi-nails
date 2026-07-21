@@ -7,7 +7,6 @@ import Hero from "@/components/hero/hero";
 import Banner from "@/components/banner/banner";
 import Footer from "@/components/footer/footer";
 import BodyCTA from "@/components/global/body-cta";
-import Script from "next/script";
 import localFont from "next/font/local";
 import { preload } from "react-dom";
 import { contactItemList } from "@/lib/data/contact";
@@ -107,11 +106,6 @@ export default function RootLayout({
 
     return (
         <html lang="en">
-            <Script
-                id="elfsight-platform"
-                src="https://elfsightcdn.com/platform.js"
-                strategy="lazyOnload"
-            />
             <GoogleAnalytics gaId="G-44N0ZCHY3Z" />
             <body className={`text-dark/80 ${worksans.className}`}>
                 <script
