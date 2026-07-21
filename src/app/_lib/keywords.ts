@@ -34,7 +34,7 @@ export const serviceKeywords: Record<string, string[]> = {
         "lifting",
         "dramatic lashes",
         "wispy lashes",
-        "hawaiian"
+        "hawaiian",
     ],
     "facial-tr": [
         "facial treatments",

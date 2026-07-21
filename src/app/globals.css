@@ -1,8 +1,8 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @theme {
-    --font-quicksand: 'Quicksand', sans-serif;
-    --font-worksans: 'Work Sans';
+    --font-quicksand: "Quicksand", sans-serif;
+    --font-worksans: "Work Sans";
 
     --color-main: #ff4030;
     --color-secondary: #c39870;
@@ -12,7 +12,7 @@
 
 @layer components {
     .button {
-        @apply py-3 px-12 font-bold text-sm text-center uppercase tracking-widest rounded-2xl cursor-pointer;
+        @apply cursor-pointer rounded-2xl px-12 py-3 text-center text-sm font-bold tracking-widest uppercase;
     }
 }
 
@@ -22,11 +22,15 @@
     }
 
     .bg-hero-vertical {
-        background: linear-gradient(var(--color-white) 30%, #fff8), url('/imgs/back-hero.webp');
+        background:
+            linear-gradient(var(--color-white) 30%, #fff8),
+            url("/imgs/back-hero.webp");
     }
 
     .bg-hero-horizontal {
-        background: linear-gradient(to right, var(--color-white) 40%, #fff8), url('/imgs/back-hero.webp');
+        background:
+            linear-gradient(to right, var(--color-white) 40%, #fff8),
+            url("/imgs/back-hero.webp");
     }
 
     .bg-faq {
@@ -34,13 +38,13 @@
     }
 
     .bt-shape::before {
-        content: '';
-        @apply h-37 absolute -left-0.5 -right-0.5 -bottom-0.5 z-30 pointer-events-none bg-no-repeat bg-position-[0%_100%] bg-[url('/icons/shape.svg')] bg-size-[200%_150px];
+        content: "";
+        @apply pointer-events-none absolute -right-0.5 -bottom-0.5 -left-0.5 z-30 h-37 bg-[url('/icons/shape.svg')] bg-size-[200%_150px] bg-position-[0%_100%] bg-no-repeat;
     }
 
     .tp-shape::after {
-        content: '';
-        @apply h-37 absolute -left-0.5 -right-0.5 top-0 z-30 pointer-events-none bg-no-repeat bg-position-[0%_100%] bg-[url('/icons/shape.svg')] bg-size-[200%_150px] rotate-180;
+        content: "";
+        @apply pointer-events-none absolute top-0 -right-0.5 -left-0.5 z-30 h-37 rotate-180 bg-[url('/icons/shape.svg')] bg-size-[200%_150px] bg-position-[0%_100%] bg-no-repeat;
     }
 }
 
@@ -54,7 +58,7 @@
 /** Calendar Styles **/
 
 .calendar:nth-child(odd) {
-    @apply pb-24 pt-48 max-w-dvw text-center bg-white text-secondary;
+    @apply text-secondary max-w-dvw bg-white pt-48 pb-24 text-center;
 }
 
 .calendar .section-header {
@@ -62,18 +66,18 @@
 }
 
 .calendar > div {
-    @apply flex flex-col gap-12 grow basis-[min(15rem,100%)];
+    @apply flex grow basis-[min(15rem,100%)] flex-col gap-12;
 }
 
 /************************************* Footer Styles ****************************************/
-
 
 .footer-rights {
     @apply flex flex-col items-center gap-2;
 }
 
-.footer-rights__copy, .footer-rights__author {
-    @apply block text-sm text-center;
+.footer-rights__copy,
+.footer-rights__author {
+    @apply block text-center text-sm;
 }
 
 .footer-rights__copy {
@@ -81,5 +85,5 @@
 }
 
 .footer-rights__author a {
-    @apply text-sm font-bold underline
+    @apply text-sm font-bold underline;
 }

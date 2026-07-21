@@ -1,5 +1,10 @@
 export default function TestimonialsList() {
-    return <div className="elfsight-app-2db79281-8c28-4ef2-9073-01929cb15609" data-elfsight-app-lazy></div>
+    return (
+        <div
+            className="elfsight-app-2db79281-8c28-4ef2-9073-01929cb15609"
+            data-elfsight-app-lazy
+        ></div>
+    );
     // return (
     //     <ul ref={ref} className={`testimonials-list ${inView? 'animate' : ''}`}>
     //         {data.map(item => {

@@ -1,23 +1,23 @@
 export interface NavLink {
-    path: string
-    text: string
+    path: string;
+    text: string;
 }
 
 export const navLinkList: NavLink[] = [
     {
-        path: '/',
-        text: 'Home'
+        path: "/",
+        text: "Home",
     },
     {
-        path: '/services',
-        text: 'Services'
+        path: "/services",
+        text: "Services",
     },
     {
-        path: '/about',
-        text: 'About'
+        path: "/about",
+        text: "About",
     },
     {
-        path: '/reservation',
-        text: 'Reservation'
-    }
-]
+        path: "/reservation",
+        text: "Reservation",
+    },
+];

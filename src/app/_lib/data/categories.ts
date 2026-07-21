@@ -1,75 +1,99 @@
 export interface Category {
-    name: string,
-    path: string,
-    img: string,
-    title: string,
-    desc: string,
-    minPrice: number,
+    name: string;
+    path: string;
+    img: string;
+    title: string;
+    desc: string;
+    minPrice: number;
 }
 
 export const categories: Map<string, Category> = new Map([
-    ['nails', {
-        name: 'Nails',
-        path: 'nails',
-        img: 'nails.webp',
-        title: 'Luxe Hands & Feet Rituals',
-        desc: 'From express polish changes to our signature Herbal Detox Pedicure, precision nail shaping, cuticle care. Walk out with magazine-ready nails.',
-        minPrice: 35,
-    }],
-    ['browns', {
-        name: 'Browns',
-        path: 'browns',
-        img: 'browns.webp',
-        title: 'Browns Sculpt',
-        desc: 'Architectural brow design without waxing. We map your brows to harmonize with your facial features for natural-looking definition.',
-        minPrice: 350,
-    }],
-    ['lashes', {
-        name: 'Lashes',
-        path: 'lashes',
-        img: 'lashes.webp',
-        title: 'Lash Couture Collection',
-        desc: 'Classic, hybrid, or volume extensions applied strand-by-strand with medical-grade adhesives. Wake up with fuller, darker lashes.',
-        minPrice: 75,
-    }],
-    ['facial-tr', {
-        name: 'Facial Treatments',
-        path: 'facial-tr',
-        img: 'faces.webp',
-        title: 'Skin Revival Therapies',
-        desc: 'Custom facials targeting acne, aging, or hydration using clinical-grade peels and LED technology. Includes deep cleansing, extractions and more.',
-        minPrice: 100,
-    }],
-    ['facial-hr', {
-        name: 'Facial Hair Removal',
-        path: 'facial-hr',
-        img: 'facial.webp',
-        title: 'Facial Hair Removal',
-        desc: 'Laser hair removal treatments focused on specific facial areas like the upper lip, chin, and sideburns, or a full-face option for a comprehensive solution.',
-        minPrice: 40,
-    }],
-    ['upper-hr', {
-        name: 'Upper Body HR',
-        path: 'upper-hr',
-        img: 'upper.webp',
-        title: 'Upper Body Hair Removal',
-        desc: 'Services for the upper body, ideal for removing hair from areas such as underarms, full or half arms, chest, abdomen, back, and shoulders.',
-        minPrice: 40,
-    }],
-    ['lower-hr', {
-        name: 'Lower Body HR',
-        path: 'lower-hr',
-        img: 'lower.webp',
-        title: 'Lower Body Hair Removal',
-        desc: 'Laser hair removal options for the lower body, including the bikini line, Brazilian, buttocks, full or half legs, and feet.',
-        minPrice: 40,
-    }],
-    ['full-hr', {
-        name: 'Full Body HR',
-        path: 'full-hr',
-        img: 'full.webp',
-        title: 'Hair Removal Packages',
-        desc: 'Bundles of popular services that offer added value by grouping treatment areas together at a reduced price per session.',
-        minPrice: 300,
-    }]
-])
+    [
+        "nails",
+        {
+            name: "Nails",
+            path: "nails",
+            img: "nails.webp",
+            title: "Luxe Hands & Feet Rituals",
+            desc: "From express polish changes to our signature Herbal Detox Pedicure, precision nail shaping, cuticle care. Walk out with magazine-ready nails.",
+            minPrice: 35,
+        },
+    ],
+    [
+        "browns",
+        {
+            name: "Browns",
+            path: "browns",
+            img: "browns.webp",
+            title: "Browns Sculpt",
+            desc: "Architectural brow design without waxing. We map your brows to harmonize with your facial features for natural-looking definition.",
+            minPrice: 350,
+        },
+    ],
+    [
+        "lashes",
+        {
+            name: "Lashes",
+            path: "lashes",
+            img: "lashes.webp",
+            title: "Lash Couture Collection",
+            desc: "Classic, hybrid, or volume extensions applied strand-by-strand with medical-grade adhesives. Wake up with fuller, darker lashes.",
+            minPrice: 75,
+        },
+    ],
+    [
+        "facial-tr",
+        {
+            name: "Facial Treatments",
+            path: "facial-tr",
+            img: "faces.webp",
+            title: "Skin Revival Therapies",
+            desc: "Custom facials targeting acne, aging, or hydration using clinical-grade peels and LED technology. Includes deep cleansing, extractions and more.",
+            minPrice: 100,
+        },
+    ],
+    [
+        "facial-hr",
+        {
+            name: "Facial Hair Removal",
+            path: "facial-hr",
+            img: "facial.webp",
+            title: "Facial Hair Removal",
+            desc: "Laser hair removal treatments focused on specific facial areas like the upper lip, chin, and sideburns, or a full-face option for a comprehensive solution.",
+            minPrice: 40,
+        },
+    ],
+    [
+        "upper-hr",
+        {
+            name: "Upper Body HR",
+            path: "upper-hr",
+            img: "upper.webp",
+            title: "Upper Body Hair Removal",
+            desc: "Services for the upper body, ideal for removing hair from areas such as underarms, full or half arms, chest, abdomen, back, and shoulders.",
+            minPrice: 40,
+        },
+    ],
+    [
+        "lower-hr",
+        {
+            name: "Lower Body HR",
+            path: "lower-hr",
+            img: "lower.webp",
+            title: "Lower Body Hair Removal",
+            desc: "Laser hair removal options for the lower body, including the bikini line, Brazilian, buttocks, full or half legs, and feet.",
+            minPrice: 40,
+        },
+    ],
+    [
+        "full-hr",
+        {
+            name: "Full Body HR",
+            path: "full-hr",
+            img: "full.webp",
+            title: "Hair Removal Packages",
+            desc: "Bundles of popular services that offer added value by grouping treatment areas together at a reduced price per session.",
+            minPrice: 300,
+        },
+    ],
+]);

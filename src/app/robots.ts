@@ -3,9 +3,9 @@ import { MetadataRoute } from "next";
 export default function robots(): MetadataRoute.Robots {
     return {
         rules: {
-            userAgent: '*',
-            allow: '/'
+            userAgent: "*",
+            allow: "/",
         },
-        sitemap: 'https://sofinailsandlashesspa.com/sitemap.xml'
-    }
+        sitemap: "https://sofinailsandlashesspa.com/sitemap.xml",
+    };
 }
