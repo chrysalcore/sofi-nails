@@ -2,7 +2,7 @@ import localFont from "next/font/local";
 import type { SectionHeader } from "@/lib/data/sections";
 
 const allura = localFont({
-    src: "../../lib/fonts/Allura.ttf",
+    src: "../../lib/fonts/Allura.woff2",
     display: "swap",
     preload: true,
 });

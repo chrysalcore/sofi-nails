@@ -22,9 +22,33 @@ Preferencias generales en `~/.claude/CLAUDE.md`. Esto es lo propio de este repo.
 - **Best Practices** — bajaba por errores de consola + cookies de terceros (Elfsight/GTM), nada bloqueante en sí.
 - **SEO** — 100/100 en las tres páginas.
 
-### Fixes aplicados (2026-07-20, sesión posterior al baseline — pendiente re-medir)
+### Fixes aplicados (2026-07-20, sesión posterior al baseline)
 
 - Widget de Elfsight del calendario en `/reservation` (`_components/calendar.tsx`) archivado: sacado el `import`/uso de `page.tsx`, el archivo se dejó sin borrar por si se retoma.
 - Widget de testimonios (`_components/testimonials/testimonials-list.tsx`) se mantiene con Elfsight (decisión consciente: las reseñas se actualizan en tiempo real, el reemplazo estático que estaba comentado en el archivo no cubre ese requisito — se eliminó ese código muerto). Se reescribió como client component con `IntersectionObserver` propio (ref + `useEffect`) para que el script `platform.js` y el div del widget solo se monten cuando la sección entra en viewport por scroll real del usuario — el `<Script>` global se sacó de `layout.tsx` (ya no se necesita en ninguna otra página tras archivar el calendario).
 - `aria-label` agregado al toggle de menú móvil (`components/nav/aside-nav.tsx`, con `aria-expanded` también) y al botón flotante de llamada (`components/global/body-cta.tsx`).
-- Pendiente: fix de contraste (footer/nav/FAQ) y re-medir Lighthouse para documentar antes/después.
+- Pendiente: fix de contraste (footer/nav/FAQ).
+
+### Re-medición (2026-07-21, contra el deployment de `preview` en Vercel)
+
+| Página | Performance | Accessibility | Best Practices | SEO |
+| :--- | :--- | :--- | :--- | :--- |
+| Home | 59 (56) | 96 (91) | 100 (75) | 69\* (100) |
+| `/services/nails` | 64 (70) | 96 (90) | 100 (96) | 69\* (100) |
+| `/reservation` | 66 (59) | 96 (91) | 100 (75) | 69\* (100) |
+
+*(entre paréntesis, el baseline contra producción)*
+
+- **Metodología distinta al baseline** — esta vez se corrió Lighthouse + axe-core localmente vía Playwright/puppeteer-core contra el deployment real de `preview`, no PageSpeed Insights contra producción. Los deployments de preview de Vercel están protegidos por Deployment Protection (SSO); hubo que generar un shareable link (`get_access_to_vercel_url` del MCP de Vercel) para setear la cookie `_vercel_jwt` y auditar el sitio real en vez de la pantalla de login de Vercel.
+- **SEO (69, marcado con \*)** — no es una regresión real: el único audit que falla es `is-crawlable`, causado por el header `X-Robots-Tag: noindex` que Vercel agrega automáticamente a *todos* los preview deployments (para que no los indexe Google). Ese header no existe en producción; ahí debería seguir en 100.
+- **Accessibility (96, sube de 90-91)** — confirma que los `aria-label` sí resolvieron los nombres accesibles faltantes. axe-core ya no reporta violaciones de nombre accesible.
+- **Best Practices (100 en las tres páginas, sube de 75-96)** — mejora fuerte, consistente con archivar el widget de Elfsight del calendario y quitar el `<Script>` global de GTM/Elfsight de páginas que no lo usan.
+- **Performance (mixto: +3 Home, −6 `/services/nails`, +7 `/reservation`)** — una sola corrida de Lighthouse mobile-throttled tiene varianza alta; no alcanza para concluir que `/services/nails` empeoró de verdad. Si se quiere una lectura confiable, correr 3-5 veces y promediar (`--output=json` + script, no a mano).
+- **Accesibilidad pendiente confirmada** — axe-core sigue reportando exactamente `color-contrast` (serious) como única violación: 30 nodos en Home, 18 en `/services/nails`, 18 en `/reservation`. Coincide con el fix de contraste (footer/nav/FAQ, `--color-dark` de fondo) que sigue sin aplicarse.
+- **Diagnóstico de performance** — el breakdown de LCP mostró un salto sospechoso (red termina a los ~1.4s, pero las long tasks que cierran el LCP corren recién a los ~5.2-5.8s): probablemente el CPU throttling 4x de Lighthouse mobile golpeando fuerte sobre la máquina compartida donde se corrió la auditoría, no necesariamente algo que vería un usuario real. Los scores de Performance de la tabla de arriba son direccionales, no confiables al 100% — remedir contra producción una vez mergeado a `main` para un número limpio.
+
+### Fuentes convertidas a WOFF2 (2026-07-21)
+
+- `src/lib/fonts/` tenía los 3 archivos en TTF/OTF crudo (`WorkSans.ttf` 362KB, `Allura.ttf` 234KB, `Konseric.otf` 32KB en disco) con `preload: true` en los tres `localFont()` (`layout.tsx`, `title.tsx`, `section-header.tsx`) — competían por prioridad en el critical path simultáneamente.
+- Convertidos a `.woff2` (vía `ttf2woff2`): `WorkSans.woff2` 134KB (-63%), `Allura.woff2` 86KB (-63%), `Konseric.woff2` 20KB (-38%). Mismo glyph set, `display: "swap"` ya estaba bien puesto en los tres así que no había FOIT, esto es puramente ahorro de bytes/prioridad de red.
+- Verificado: build limpio, sin requests de fuente fallidos, render visual idéntico (Playwright screenshot).

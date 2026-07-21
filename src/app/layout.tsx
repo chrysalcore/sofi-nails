@@ -92,7 +92,7 @@ const localBusinessSchema = {
 };
 
 const worksans = localFont({
-    src: "../lib/fonts/WorkSans.ttf",
+    src: "../lib/fonts/WorkSans.woff2",
     display: "swap",
     preload: true,
 });

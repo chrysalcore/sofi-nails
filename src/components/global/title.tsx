@@ -1,13 +1,13 @@
 import localFont from "next/font/local";
 
 const konseric = localFont({
-    src: "../../lib/fonts/Konseric.otf",
+    src: "../../lib/fonts/Konseric.woff2",
     display: "swap",
     preload: true,
 });
 
 const allura = localFont({
-    src: "../../lib/fonts/Allura.ttf",
+    src: "../../lib/fonts/Allura.woff2",
     display: "swap",
     preload: true,
 });
