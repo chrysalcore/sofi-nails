@@ -10,6 +10,7 @@ export default function BodyCTA() {
             <button
                 className="bg-main button m-0 fill-white p-4 shadow-sm/10"
                 onClick={onClick}
+                aria-label="Call Sofi Nails & Lashes Spa"
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"

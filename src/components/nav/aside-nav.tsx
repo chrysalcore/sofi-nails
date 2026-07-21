@@ -16,6 +16,8 @@ export default function AsideNav() {
             <button
                 className="z-80 justify-self-end fill-white lg:hidden"
                 onClick={onToggleMenu}
+                aria-label={active ? "Close menu" : "Open menu"}
+                aria-expanded={active}
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
