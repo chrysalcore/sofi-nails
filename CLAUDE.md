@@ -117,5 +117,89 @@ curl -sI https://sofinailsandlashesspa.com/services/nails | grep -iE "x-vercel-c
 - **INP (312ms en campo, "needs improvement") — es el cuello actual.** Primero juntar más muestras en Speed Insights (mobile, rango que incluya post-2026-07-26); con N=1 no se puede concluir. Si se sostiene sobre 200ms, empezar por la hipótesis de GA/`pointerdown` descrita arriba, que es barata de probar. LCP y CLS ya están en rango bueno en campo: no tocarlos.
 - **TBT (448ms con throttling real).** Es la contracara en lab del INP. El mayor contribuyente es react-dom hidratando; ya se bajó de 9 a 5 client components y los que quedan son necesarios. No hay palanca obvia restante sin sacar interactividad.
 - Fix de contraste (footer/nav/FAQ): usar `--color-dark` (#6e5b3d) como fondo en vez del tint `#d5b79b` (ratio ~1.89, falla AA) — axe-core lo reporta como única violación de accesibilidad en las 3 páginas. Separado a propósito por implicar cambio visual.
-- Vulnerabilidad Dependabot #27 (high) abierta en la rama default.
+- Dependabot: **11 vulnerabilidades abiertas en la rama default (6 high, 5 moderate)** — el número lo reporta GitHub en la salida de cada `git push`. Antes se había anotado solo la #27; creció.
 - OG images: no hay `export const alt`, así que las previews sociales no tienen texto alternativo (tampoco lo tenían antes — el `alt` del `<img>` dentro del `ImageResponse` se rasterizaba y se perdía).
+
+## SEO y Search Console — historial y diagnóstico (2026-07-27)
+
+Analizado el export completo de 16 meses de GSC (**2025-08-08 a 2026-07-24**, tipo Web). Antes se había mirado solo el de 3 meses y **dio una lectura equivocada** — ver la sección de errores metodológicos abajo.
+
+### La tendencia real es fuertemente ascendente
+
+| Mes | Clics/día | Impr/día | Posición |
+| :--- | :--- | :--- | :--- |
+| 2025-08 | 1.6 | 18 | 12.41 |
+| 2025-09 | 1.6 | 21 | 12.09 |
+| **2025-10** | **2.5** | **37** | **7.99** ← inflexión |
+| 2025-11 | 2.1 | 52 | 8.07 |
+| 2025-12 | 2.2 | 71 | 9.10 |
+| 2026-01 | 2.3 | 68 | 8.77 |
+| 2026-02 | 2.9 | 80 | 8.42 |
+| 2026-03 | 3.3 | 78 | 7.97 |
+| 2026-04 | 3.6 | 86 | 7.52 |
+| 2026-05 | 5.0 | 106 | 7.50 |
+| 2026-06 | 4.2 | 103 | **6.80** ← mejor posición histórica |
+| 2026-07 (24d) | 4.0 | 89 | 8.24 |
+
+En 12 meses: clics/día **+150%** (1.6 → 4.0), impresiones/día **+394%** (18 → 89). Julio 2026, incluso "caído", es el **tercer mejor mes** del historial.
+
+### Errores metodológicos cometidos acá — no repetir
+
+- **Comparar una ventana de 7 días contra una base que incluye un pico da un número inventado.** Se midió la última semana contra los 66 días previos (que contenían el pico de mayo) y dio **−31%**. Con ventanas de 28 días la caída real es **−6%** contra la ventana anterior, y la última ventana sigue siendo la 3ª mejor de 6 y está **por encima de todas las anteriores a mayo** (+22% vs abril, +29% vs marzo).
+- **Con 3-4 clics/día el ruido semanal es enorme.** Usar ventanas de 28 días como mínimo; nunca concluir de 7 días.
+- **Exportar siempre los 16 meses, no los 3 por defecto.** GSC guarda 16 y el filtro por defecto oculta justo el contexto que decide si algo es caída o regresión a la media.
+
+### Core updates de Google — el sitio ya pasó por varios
+
+Rodadas confirmadas, verificadas contra la serie: **marzo 2026** (27/3–8/4), **mayo 2026** (21/5–2/6), **junio 2026** (30/6–17/7).
+
+| Update | Antes | Durante | Después |
+| :--- | :--- | :--- | :--- |
+| Marzo 2026 | 3.6 clics/d | **2.4** (−33%) | **4.1** (+14% sobre el nivel previo) |
+| Mayo 2026 | 4.1 | 5.4 | 4.3 |
+| Junio 2026 | 4.3 | 4.4 | 3.1 (solo 7 días de datos) |
+
+**En marzo el sitio cayó un tercio durante el rollout y salió por encima de donde entró.** Es el mismo patrón que se está viviendo ahora; la recuperación de marzo tardó ~42 días. No hay nada que "arreglar" tras un core update: no es una penalización, es una recalibración de todo el índice a la vez.
+
+Cadencia histórica: 3-4 core updates al año (4 en 2023, 4 en 2024, 3 en 2025), cada 3-4 meses, con rollouts de 2 a 6 semanas. 2026 va más rápido: 3 en 5 meses. **Desde el 2026-07-09 Google confirmó que los updates menores corren de forma continua y sin anuncio** — solo los grandes con nombre entran al [Search Status Dashboard](https://status.search.google.com/products/rGHU1u87FJnkP6W2GwMi/history). Consultarlo **antes** de buscar la causa de una caída en el código.
+
+### El salto de octubre 2025 no fue Next.js
+
+La inflexión (posición ~11-15 estancada seis semanas → ~8 en dos semanas, arrancando entre el **25 y el 28 de septiembre de 2025**) ocurrió **seis meses antes** de la migración. Todo el crecimiento ya estaba en marcha con el sitio React andando.
+
+Se revisaron los 4 commits del 2025-09-25 en el repo viejo (`/home/ordnay/Proyectos/React/sofispa`) y **ninguno explica un salto de 3 puntos de posición**: `98fbc89` "SEO enhanced" es sobre todo un refactor (extrajo `SectionHeader.jsx`, los `<h2>` ya existían); `f914194` agregó `public/robots.txt` **vacío** (equivale a no tenerlo); `4c9bf71` cambió `base: './'` → `'/'` en Vite, que en un SPA servido en la raíz resuelve igual; el resto es URL de OG y logo minificado.
+
+**Explicación más probable: maduración natural de un sitio nuevo** (primeros datos 2025-08-08, arranca en posición ~12). No está demostrado — con estos datos no se pueden separar maduración, cambios de septiembre y core updates.
+
+### Qué aportó Next.js, medido
+
+El sitio React era **una sola página con anclas** (`/#services`, `/#faq`, `/#gallery`, `/#testimonials` — todavía aparecen en GSC como sitelinks, 91 impresiones c/u). Next introdujo rutas reales:
+
+| URL (solo existe en Next) | Impresiones | Clics | CTR |
+| :--- | :--- | :--- | :--- |
+| `/about` | 1123 | 2 | 0.18% |
+| `/reservation` | 660 | 1 | 0.15% |
+| `/services` | 659 | 0 | 0% |
+| `/services/nails` | 35 | 0 | 0% |
+| `/services/full-hr` | 17 | 0 | 0% |
+| **Total** | **2494** | **3** | — |
+
+~2.500 impresiones nuevas (≈**22% de las impresiones del período Next**) que generaron **3 clics**. Next amplió la superficie indexable; no la convirtió. **Tampoco hizo daño**: no hay escalón hacia abajo en marzo-abril pese a haber migrado en pleno core update.
+
+El home concentra **1026 de 1029 clics (99.7%)** con CTR 4.34%.
+
+### Copywriting — objetivo declarado, mayor palanca identificada
+
+Ordnay quiere **mejorar el copywriting del sitio en general** (pedido 2026-07-27, a encarar más adelante). El dato que lo respalda: `/about` (1123 impresiones, CTR **0.18%**) y `/reservation` (660, **0.15%**) contra el 4.34% del home. Son páginas que **ya ganaron visibilidad en resultados y nadie clickea** — problema de `title`/`description`, no de ranking. Es el trabajo con retorno más claro pendiente, por encima de cualquier optimización técnica restante.
+
+### Verificado y descartado como causa de caídas
+
+Canonicals autorreferenciales y correctos en las 6 páginas probadas; sin `noindex` (ni meta ni header `X-Robots-Tag`); `robots.txt` con `Allow: /` y sitemap declarado; sitemap con las 11 URLs en 200; JSON-LD `BeautySalon` válido y completo (dirección, geo, horarios, teléfono correcto, `sameAs`).
+
+Las consultas son **locales** (`nail salon salem va`, `nail salon near me`, `pedicure near me`): ahí manda el **perfil de Google Business**, no el sitio. Reseñas, fotos y competencia mueven más que cualquier cambio en el repo.
+
+`/services` tenía 659 impresiones en posición 5.30 con 0 clics y desde el 2026-07-26 es un 308 permanente → Google la va a consolidar en `/services/nails`. **Es esperado que desaparezca del informe**; no es una regresión.
+
+### Bug pendiente
+
+`src/components/hero/award.tsx:6` — el JSON-LD del premio usa `"@type": "Award"`, que **no existe en schema.org** (`schema.org/Award` → 404; `award` existe pero como *propiedad*, no como tipo), y su `url` apunta a `/awards/reviews.jpg`, que **responde 404** (la imagen real es `/imgs/award.png`). Google ignora los tipos que no reconoce, así que no afecta ranking, pero es markup muerto hacia un recurso inexistente.
