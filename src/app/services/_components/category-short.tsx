@@ -1,13 +1,11 @@
-"use client";
-
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { type Category } from "../../_lib/data/categories";
 
-export default function CategoryShort({ name, path }: Category) {
-    const currentPath = usePathname();
-    const isActive = currentPath.endsWith(path);
-
+export default function CategoryShort({
+    name,
+    path,
+    isActive,
+}: Category & { isActive: boolean }) {
     return (
         <li>
             <Link
