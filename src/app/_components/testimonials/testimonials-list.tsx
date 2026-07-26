@@ -1,11 +1,14 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { preconnect } from "react-dom";
 import Script from "next/script";
 
 export default function TestimonialsList() {
     const ref = useRef<HTMLDivElement>(null);
     const [inView, setInView] = useState(false);
+
+    preconnect("https://elfsightcdn.com");
 
     useEffect(() => {
         const node = ref.current;

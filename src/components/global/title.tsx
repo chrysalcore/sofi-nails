@@ -1,16 +1,4 @@
-import localFont from "next/font/local";
-
-const konseric = localFont({
-    src: "../../lib/fonts/Konseric.woff2",
-    display: "swap",
-    preload: true,
-});
-
-const allura = localFont({
-    src: "../../lib/fonts/Allura.woff2",
-    display: "swap",
-    preload: true,
-});
+import { allura, konseric } from "@/lib/fonts";
 
 export default function Title({ isMainTitle }: { isMainTitle?: boolean }) {
     const titleStyles = "flex flex-col gap-4 tracking-widest";

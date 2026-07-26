@@ -3,7 +3,12 @@
 import { useEffect, useState } from "react";
 import { GoogleAnalytics } from "@next/third-parties/google";
 
-const INTERACTION_EVENTS = ["pointerdown", "keydown", "scroll", "touchstart"] as const;
+const INTERACTION_EVENTS = [
+    "pointerdown",
+    "keydown",
+    "scroll",
+    "touchstart",
+] as const;
 const FALLBACK_DELAY_MS = 4000;
 
 export default function DeferredAnalytics({ gaId }: { gaId: string }) {
@@ -19,7 +24,9 @@ export default function DeferredAnalytics({ gaId }: { gaId: string }) {
 
         return () => {
             clearTimeout(timeout);
-            INTERACTION_EVENTS.forEach((event) => window.removeEventListener(event, load));
+            INTERACTION_EVENTS.forEach((event) =>
+                window.removeEventListener(event, load),
+            );
         };
     }, []);
 

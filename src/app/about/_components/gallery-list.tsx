@@ -10,8 +10,8 @@ export default function GalleryList() {
                         className="h-full w-full object-cover"
                         src={`/imgs/${photo}`}
                         alt={photo}
-                        width={240}
-                        height={192}
+                        width={340}
+                        height={240}
                     />
                 </li>
             ))}

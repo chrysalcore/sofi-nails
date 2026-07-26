@@ -7,7 +7,7 @@ import Banner from "@/components/banner/banner";
 import Footer from "@/components/footer/footer";
 import BodyCTA from "@/components/global/body-cta";
 import DeferredAnalytics from "@/components/global/deferred-analytics";
-import localFont from "next/font/local";
+import { worksans } from "@/lib/fonts";
 import { preload } from "react-dom";
 import { contactItemList } from "@/lib/data/contact";
 import { socialLinkList } from "@/lib/data/social-links";
@@ -86,12 +86,6 @@ const localBusinessSchema = {
     },
     sameAs: socialLinkList.map((item) => item.path),
 };
-
-const worksans = localFont({
-    src: "../lib/fonts/WorkSans.woff2",
-    display: "swap",
-    preload: true,
-});
 
 export default function RootLayout({
     children,

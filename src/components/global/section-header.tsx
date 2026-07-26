@@ -1,11 +1,5 @@
-import localFont from "next/font/local";
+import { allura } from "@/lib/fonts";
 import type { SectionHeader } from "@/lib/data/sections";
-
-const allura = localFont({
-    src: "../../lib/fonts/Allura.woff2",
-    display: "swap",
-    preload: true,
-});
 
 export default function SectionHeader({ title, desc }: SectionHeader) {
     return (

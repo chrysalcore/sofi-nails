@@ -17,8 +17,8 @@ export default function Category({
                         className="w-full"
                         src={`/imgs/${img}`}
                         alt={`${title} icon`}
-                        width={288}
-                        height={115.2}
+                        width={360}
+                        height={144}
                     />
                 </picture>
                 <div className="flex flex-col gap-3 px-4 py-0 text-center">
