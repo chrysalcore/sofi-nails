@@ -10,6 +10,10 @@ type Props = {
     params: Promise<{ category: string }>;
 };
 
+export function generateStaticParams() {
+    return Array.from(categories.keys()).map((category) => ({ category }));
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { category: path } = await params;
     const category = categories.get(path);

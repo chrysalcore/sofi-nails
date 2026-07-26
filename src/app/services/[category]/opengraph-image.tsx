@@ -11,6 +11,10 @@ export const size = {
 
 export const contentType = "image/png";
 
+export function generateStaticParams() {
+    return Array.from(categories.keys()).map((category) => ({ category }));
+}
+
 export default async function Image({
     params,
 }: {

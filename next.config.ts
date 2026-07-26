@@ -1,8 +1,16 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  reactCompiler: true,
+    reactCompiler: true,
+    async redirects() {
+        return [
+            {
+                source: "/services",
+                destination: "/services/nails",
+                permanent: true,
+            },
+        ];
+    },
 };
 
 export default nextConfig;
