@@ -13,8 +13,8 @@ const allura = localFont({
 });
 
 export default function Title({ isMainTitle }: { isMainTitle?: boolean }) {
-    const titleStyles = "flex flex-col gap-4 font-konseric tracking-widest";
-    const spanStyles = "block font-allura tracking-wider";
+    const titleStyles = "flex flex-col gap-4 tracking-widest";
+    const spanStyles = "block tracking-wider";
 
     return isMainTitle ? (
         <h1

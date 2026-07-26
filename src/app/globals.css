@@ -1,9 +1,6 @@
 @import "tailwindcss";
 
 @theme {
-    --font-quicksand: "Quicksand", sans-serif;
-    --font-worksans: "Work Sans";
-
     --color-main: #ff4030;
     --color-secondary: #c39870;
     --color-light: #f0f0f0;

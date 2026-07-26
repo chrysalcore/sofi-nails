@@ -41,10 +41,6 @@ export const metadata: Metadata = {
             "Professional nail art, eyelash extensions, facial treatments & laser hair removal at 2928 Bent Tree Cir, Salem. 5 Stars Rated. Book your luxury experience today!",
         images: `${SITE_URL}/opengraph-image.jpg`,
     },
-    icons: {
-        icon: "../../public/favicon/favicon.ico",
-        apple: "../../public/favicon/apple-icon.png",
-    },
     appleWebApp: {
         title: "SN&LS",
     },

@@ -26,7 +26,7 @@ function Award() {
                     alt="business rate award"
                     width={192}
                     height={225}
-                    preload
+                    priority
                 />
                 <div className="text-secondary rounded-lg bg-white p-4">
                     <h2 className="text-xl font-medium">Business Rate Award</h2>
