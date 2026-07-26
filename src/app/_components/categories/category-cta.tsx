@@ -3,9 +3,11 @@ import Link from "next/link";
 export default function CategoryCTA({
     children,
     path,
+    title,
 }: {
     children: React.ReactNode;
     path: string;
+    title: string;
 }) {
     return (
         <div className="cta">
@@ -14,6 +16,7 @@ export default function CategoryCTA({
                 href={`/services/${path}`}
             >
                 {children}
+                <span className="sr-only">{` about ${title}`}</span>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     height={28}

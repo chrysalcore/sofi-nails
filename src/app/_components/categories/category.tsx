@@ -29,7 +29,9 @@ export default function Category({
                     ${minPrice}+
                 </small>
             </div>
-            <CategoryCTA path={path}>See More</CategoryCTA>
+            <CategoryCTA path={path} title={title}>
+                See More
+            </CategoryCTA>
         </li>
     );
 }
