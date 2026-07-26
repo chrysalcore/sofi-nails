@@ -7,6 +7,7 @@ import Banner from "@/components/banner/banner";
 import Footer from "@/components/footer/footer";
 import BodyCTA from "@/components/global/body-cta";
 import DeferredAnalytics from "@/components/global/deferred-analytics";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { worksans } from "@/lib/fonts";
 import { preload } from "react-dom";
 import { contactItemList } from "@/lib/data/contact";
@@ -112,6 +113,7 @@ export default function RootLayout({
                     <BodyCTA />
                 </main>
                 <Footer />
+                <SpeedInsights />
             </body>
         </html>
     );
