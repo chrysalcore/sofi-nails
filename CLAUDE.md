@@ -46,28 +46,65 @@ Subsetear las fuentes sigue siendo una reducción de bytes legítima (y ayudarí
 
 Cero recursos bloqueando el render, `font-display` score 1, `third-party-summary` **vacío** (el fix de GA sigue funcionando). CLS es 0.000 en las 3 páginas: ahí no hay nada que hacer. El long task más grande es `1eglloh0s_w8l.js` (react-dom) con 245ms.
 
-### Datos de campo — Vercel Speed Insights (2026-07-26, primeras muestras)
+### Datos de campo — Vercel Speed Insights (2026-07-28, vía `vercel metrics`)
 
-| Métrica | Desktop | Mobile | Umbral |
+P75 de producción, ventana 2026-07-22 a 2026-07-29, todas las rutas:
+
+| Métrica | P75 | Muestras | Umbral |
 | :--- | :--- | :--- | :--- |
-| FCP | 0.43s | 1.18s | — |
-| LCP | 0.43s | 1.18s | bueno <2.5s |
-| **INP** | sin datos | **312ms** | bueno ≤200ms, NI 200–500ms |
-| CLS | sin datos | 0 | bueno <0.1 |
-| TTFB | 0.08s | 0.04s | — |
-| RES | sin datos | 95 | bueno >90 |
+| LCP | 825ms | 28 | bueno <2.5s |
+| **INP** | **32ms** | 26 | bueno ≤200ms |
+| CLS | 0.0025 | 6 | bueno <0.1 |
+| FCP | 692ms | 32 | — |
+| TTFB | 265ms | 25 | — |
 
-**Salvedad grande: N=1 en ambas.** Una sola visita por plataforma (desktop desde la PC de Ordnay, mobile desde su celular en WiFi en Brasil). El P75 de una muestra es esa muestra; el RES de 95 no significa nada con ese N. El "No data available" del RES en desktop **no es problema del paquete** — `2.0.0` es la última estable, verificado en npm; es falta de muestras.
+Por dispositivo (mobile es prácticamente toda la muestra: 25 de 26 en INP, 27 de 28 en LCP):
 
-**FCP == LCP también en campo, en ambas plataformas.** Ya son 3 métodos independientes con la misma firma (Lighthouse simulate observado 391=391, devtools 2072=2072, campo 0.43=0.43 y 1.18=1.18). El elemento LCP es texto y se pinta una sola vez. **Tema fuentes cerrado definitivamente**: el LCP real está muy por debajo del umbral bueno y no hay nada que optimizar ahí.
+| | Mobile | Desktop |
+| :--- | :--- | :--- |
+| INP P75 | 32ms | 16ms (N=1) |
+| LCP P75 | 949ms | 428ms (N=1) |
 
-**INP 312ms es la primera evidencia de campo del costo de hidratación**, y coincide con el TBT de lab (448ms con throttling real). Dos métodos independientes apuntando al mismo problema, lo que le da credibilidad pese al N=1.
+Por ruta — INP P75 / muestras: `/` 40ms (15), `/services/[category]` 32ms (8), `/reservation` 32ms (3), `/contact-us` sin datos.
 
-**Hipótesis a verificar sobre el INP:** `deferred-analytics.tsx` dispara la carga de GA con `["pointerdown", "keydown", "scroll", "touchstart"]`. `pointerdown` y `touchstart` **son parte del tap que INP mide**, así que el primer toque inyecta `gtag.js` y su descarga/ejecución cae dentro de la ventana que INP mide para esa interacción. **El fix de GA pudo haber convertido un problema de TBT en carga en un problema de INP en interacción.** Si se confirma, el arreglo es chico: mantener el trigger pero diferir la inyección real a un `requestIdleCallback` para que el trabajo del script no caiga dentro de la interacción. Falta el desglose de INP (input delay / processing / presentation delay) para confirmarlo; el panel de Speed Insights no lo muestra.
+**Las 3 Core Web Vitals están en verde en campo, con margen amplio.** El peor corte de INP es el home con 40ms, contra un umbral de 200ms.
 
-Descartado como causa del INP: Elfsight monta con `scroll`, y **scroll no es una interacción que INP mida** (INP cuenta clicks, taps y teclas).
+### El "INP 312ms" era una única muestra outlier — corregido
 
-**Ignorar el First Input Delay** que muestra el panel (2ms desktop / 163ms mobile): está deprecado justamente porque mide solo la demora antes de procesar el *primer* input, lo que esconde el costo de hidratación. INP es su reemplazo.
+La lectura del 2026-07-26 tomó el panel con **N=1** y anotó 312ms como el INP de campo, concluyendo que era "el cuello actual" y la evidencia del costo de hidratación. **Era falso.** Con N=26 la distribución real es:
+
+| avg | P75 | P90 | P99 | max |
+| :--- | :--- | :--- | :--- | :--- |
+| 37ms | 32ms | 40ms | **312ms** | **312ms** |
+
+El 312ms **sigue en el dataset**: es el máximo absoluto y coincide exacto con el p99. Es decir, era esa misma muestra única — la primera interacción de Ordnay en su celular — y ahora que hay con qué compararla se ve como lo que es, la cola extrema. Entre el P90 (40ms) y el máximo (312ms) hay un salto de 7x sin nada en medio.
+
+**Error a no repetir:** se anotó "coincide con el TBT de lab (448ms), dos métodos independientes apuntando al mismo problema, lo que le da credibilidad pese al N=1". **Una muestra no gana credibilidad por coincidir con otra métrica** — el TBT de lab y un INP outlier pueden coincidir por azar, y coincidieron. La salvedad del N estaba escrita y aun así se sacó una conclusión de acción a partir del dato. Con N=1 no se concluye, punto.
+
+**Hipótesis de GA/`pointerdown` descartada por los datos.** Se había planteado que `deferred-analytics.tsx` inyecta `gtag.js` dentro de la ventana del tap que INP mide, convirtiendo un problema de TBT en uno de INP. Puede que ese mecanismo explique el outlier de 312ms (es justo la primera interacción), pero **el P75 de 32ms dice que no afecta la experiencia del percentil que importa**. No tocar `deferred-analytics.tsx`: el fix de GA sigue siendo correcto y su costo real es una interacción por sesión, invisible en el P75.
+
+Descartado también en su momento: Elfsight monta con `scroll`, y **scroll no es una interacción que INP mida** (INP cuenta clicks, taps y teclas).
+
+**Ignorar el First Input Delay** que muestra el panel: está deprecado justamente porque mide solo la demora antes de procesar el *primer* input, lo que esconde el costo de hidratación. INP es su reemplazo.
+
+**FCP == LCP: ya no se sostiene como identidad exacta.** En campo con N real, FCP P75 (692ms) y LCP P75 (825ms) difieren. No es contradicción con lo observado antes — cada P75 se calcula sobre su propio conjunto de muestras (32 vs 28), así que no tienen por qué caer en la misma visita. La conclusión que importa sí se mantiene: el elemento LCP es texto, el LCP real está muy por debajo del umbral, **tema fuentes cerrado**.
+
+### Cómo consultar Speed Insights sin el panel
+
+`vercel metrics` (CLI ≥ v56) consulta Speed Insights desde la terminal, sin Observability Plus. Es la forma correcta de leer esto — el panel no muestra el N y por eso se coló el error del 312ms.
+
+```bash
+vercel metrics vercel.speed_insights.inp_count --aggregation sum --group-by route --since 7d --prod
+vercel metrics vercel.speed_insights.inp_ms --aggregation p75 --group-by device_type --since 7d --prod
+```
+
+- **Leer siempre el `_count` antes que el valor.** Cada métrica tiene su par: `lcp_ms`/`lcp_count`, `inp_ms`/`inp_count`, `cls`/`cls_count`, `fcp_*`, `ttfb_*`.
+- **El plan Hobby solo da los últimos 7 días.** `--since 30d` falla con `the hobby plan only grants access to the latest 7 days of data`. Para conservar historial hay que exportar periódicamente (`--json`).
+- Agregaciones útiles más allá del panel: `avg`, `p90`, `p99`, `max` — son las que delatan un outlier.
+- **El Real Experience Score no sale por CLI**, solo por el panel. Con N de dos dígitos tampoco significa gran cosa.
+- El MCP de Vercel **no expone Speed Insights**; su `get_web_analytics` es otro producto (visitas/pageviews) y además no está habilitado en este proyecto.
+
+**Sobre el N en general:** con ~4 visitas/día el dataset crece lento. Estos números son de dos dígitos de muestras — sirven para descartar un problema grosero (y lo descartaron), no para detectar una regresión de 20ms.
 
 **Sobre Search Console:** sus Core Web Vitals vienen de CrUX, que exige un mínimo de tráfico para que un origen aparezca. Un salón local puede no alcanzar nunca ese umbral y el reporte quedaría vacío de forma permanente — no sería un error de implementación. Speed Insights no tiene esa restricción porque mide el tráfico propio directamente.
 
@@ -114,8 +151,9 @@ curl -sI https://sofinailsandlashesspa.com/services/nails | grep -iE "x-vercel-c
 - `globals.css` declaraba `--font-quicksand` (fuente que no existe en el repo) y `--font-worksans`, ninguna usada. `title.tsx` usaba `font-konseric`/`font-allura`, clases inertes por no tener variable en `@theme` (la tipografía aplicaba por el `className` de `next/font`).
 
 **Pendiente / próximos pasos (en orden de impacto esperado):**
-- **INP (312ms en campo, "needs improvement") — es el cuello actual.** Primero juntar más muestras en Speed Insights (mobile, rango que incluya post-2026-07-26); con N=1 no se puede concluir. Si se sostiene sobre 200ms, empezar por la hipótesis de GA/`pointerdown` descrita arriba, que es barata de probar. LCP y CLS ya están en rango bueno en campo: no tocarlos.
-- **TBT (448ms con throttling real).** Es la contracara en lab del INP. El mayor contribuyente es react-dom hidratando; ya se bajó de 9 a 5 client components y los que quedan son necesarios. No hay palanca obvia restante sin sacar interactividad.
+- **Performance está cerrado por ahora.** Las 3 Core Web Vitals están en verde en campo con margen amplio (INP P75 32ms, LCP 825ms, CLS 0.0025). No hay nada que optimizar que se traduzca en experiencia real. **La palanca pendiente con retorno claro es el copywriting** (ver sección de Search Console), no performance.
+- **El TBT de lab (448ms con throttling real) ya no justifica trabajo.** Se lo tenía como la contracara del INP alto; ahora que el INP de campo es 32ms, ese TBT es un número de lab bajo throttling agresivo que no se manifiesta en usuarios reales. El mayor contribuyente sigue siendo react-dom hidratando y no hay palanca sin sacar interactividad — pero tampoco hace falta. **No perseguir el número de Lighthouse cuando el campo dice que está bien.**
+- Fuentes: subsetear sigue siendo una reducción de bytes legítima, pero con el LCP de campo en 825ms no compra nada medible. Baja prioridad.
 - Fix de contraste (footer/nav/FAQ): usar `--color-dark` (#6e5b3d) como fondo en vez del tint `#d5b79b` (ratio ~1.89, falla AA) — axe-core lo reporta como única violación de accesibilidad en las 3 páginas. Separado a propósito por implicar cambio visual.
 - Dependabot: **11 vulnerabilidades abiertas en la rama default (6 high, 5 moderate)** — el número lo reporta GitHub en la salida de cada `git push`. Antes se había anotado solo la #27; creció.
 - OG images: no hay `export const alt`, así que las previews sociales no tienen texto alternativo (tampoco lo tenían antes — el `alt` del `<img>` dentro del `ImageResponse` se rasterizaba y se perdía).
