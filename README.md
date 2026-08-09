@@ -4,6 +4,7 @@ Business website for Sofi Nails & Lashes Spa beauty salon with all their service
 
 [![Next.js](https://img.shields.io/badge/Next.js_16.2.9-black)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript_5.9-blue)](https://www.typescriptlang.org/)
+[![Vitest](https://img.shields.io/badge/Vitest_4.1-darkgreen)](https://vitest.dev/)
 [![License](https://img.shields.io/badge/Polyform_Perimeter_License_1.0.0-red)](LICENSE)
 
 ## Preview
@@ -41,14 +42,39 @@ Top-performing pages reflect strong search intent and content relevance:
 
 Low bounce rates on service and reservation pages (3–8%) indicate visitors are finding relevant content and moving toward booking. Social channels (Facebook, Instagram) complement organic search, contributing ~400–450 new users alongside direct traffic.
 
-Built with React components, responsive TailwindCSS styling, accessibility in mind, and Google Analytics integration via `@next/third-parties` for ongoing performance tracking.
+Built with React components, responsive TailwindCSS styling, accessibility in mind, and Google Analytics via `@next/third-parties` — mounted behind a deferred loader so the tag never blocks initial page load — plus Vercel Speed Insights for real-user performance monitoring.
+
+## Performance
+
+Real-user field data from Vercel Speed Insights (production, 7-day window ending 2026-07-28), all metrics at the 75th percentile:
+
+| Metric | P75 | Google threshold | Status |
+| :--- | :--- | :--- | :--- |
+| **Real Experience Score** (mobile) | **100** | good > 90 | ✅ |
+| Interaction to Next Paint (INP) | 32 ms | good ≤ 200 ms | ✅ |
+| Largest Contentful Paint (LCP) | 825 ms | good < 2.5 s | ✅ |
+| Cumulative Layout Shift (CLS) | 0.0025 | good < 0.1 | ✅ |
+| First Contentful Paint (FCP) | 692 ms | — | — |
+| Time to First Byte (TTFB) | 265 ms | — | — |
+
+All three Core Web Vitals pass with wide margin, on mobile hardware over real cellular and WiFi connections. Sample sizes are in the tens of data points, in line with a local business's traffic volume.
+
+This is the result of deliberate optimization work rather than framework defaults:
+
+- **Analytics deferred until first user interaction** (or a 4s fallback), keeping Google Analytics off the critical path entirely — it no longer appears in Lighthouse's third-party summary.
+- **Third-party widgets mounted via `IntersectionObserver`**, so review embeds cost nothing until scrolled into view.
+- **Every route statically prerendered** (13/13), including dynamic service categories and their per-route OG images, via `generateStaticParams()` — every request is a CDN cache hit, with no serverless invocation.
+- **Minimal client-side JavaScript**: only 5 client components in the entire app; everything else is a React Server Component.
+- **Self-hosted fonts converted to WOFF2** (38–63% smaller than the source TTF/OTF) with `display: swap`.
+- **Zero-JavaScript FAQ accordion** built on the native `<details name>` element.
+- **Open Graph images served as JPEG** rather than PNG (720 KB → 37–56 KB each).
 
 ## Main Features
 
-- Server-side/Static rendering using Next.js (`getStaticProps`, `getStaticPaths`, or `app` router with Server Components)
-- Component-based UI architecture
-- Static and dynamic page generation for services and categories
-- Responsive design with CSS modules or global styles
+- Static rendering with the App Router and React Server Components — all 13 routes prerendered at build time
+- Component-based UI architecture, colocated per route with Next.js `_components` / `_lib` private folders
+- Static generation of service category pages and their OG images via `generateStaticParams()`
+- Responsive design with TailwindCSS utility classes
 - SEO-friendly metadata and Open Graph tags
 - Reservation form powered by a Next.js Server Action that emails the salon via Resend
 
@@ -69,8 +95,12 @@ The booking flow (`/reservation`) is built entirely with a Next.js Server Action
 | Styling | CSS, TailwindCSS |
 | Routing | Next.js App Router |
 | Backend | Server Actions, Resend (transactional email) |
+| Validation | Zod |
+| Monitoring | Vercel Speed Insights, Google Analytics 4 |
+| Testing | Vitest, Testing Library |
 | Tools | ESLint, Prettier |
 | Version Control | Git, GitHub |
+| CI/CD | GitHub Actions |
 | Deployment | Vercel |
 
 ## Local Installation and Use
@@ -87,8 +117,8 @@ Follow these steps to run the project on your local machine.
 1. Clone the repository
 
     ```bash
-    git clone https://github.com/chrysalcore/sofinailsandlashesspa.git
-    cd sofinailsandlashesspa
+    git clone https://github.com/chrysalcore/sofi-nails.git
+    cd sofi-nails
     ```
 
 2. Install dependencies
@@ -120,6 +150,21 @@ Follow these steps to run the project on your local machine.
     npm run start
     # or pnpm build && pnpm start
     ```
+
+### Run tests
+
+```bash
+npm test              # watch mode
+npm run test:run      # single run
+npm run test:coverage # single run with coverage report, used by CI
+npm run typecheck     # tsc --noEmit, used by CI
+```
+
+Unit tests cover the reservation form's Zod schema; an integration test renders the reservation form end-to-end against the real `sendEmail` Server Action, mocking only the Resend SDK at the network boundary.
+
+## CI/CD
+
+A single GitHub Actions workflow (`.github/workflows/ci.yml`) runs on every push to `development`: type-check, lint, the test suite with coverage, and a production build. If it passes, it opens a pull request to `main`. There's no separate deploy workflow — Vercel's native Git integration builds and deploys on every push to `main`.
 
 ## License
 
