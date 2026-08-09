@@ -4,6 +4,7 @@ Business website for Sofi Nails & Lashes Spa beauty salon with all their service
 
 [![Next.js](https://img.shields.io/badge/Next.js_16.2.9-black)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript_5.9-blue)](https://www.typescriptlang.org/)
+[![Vitest](https://img.shields.io/badge/Vitest_4.1-darkgreen)](https://vitest.dev/)
 [![License](https://img.shields.io/badge/Polyform_Perimeter_License_1.0.0-red)](LICENSE)
 
 ## Preview
@@ -96,8 +97,10 @@ The booking flow (`/reservation`) is built entirely with a Next.js Server Action
 | Backend | Server Actions, Resend (transactional email) |
 | Validation | Zod |
 | Monitoring | Vercel Speed Insights, Google Analytics 4 |
+| Testing | Vitest, Testing Library |
 | Tools | ESLint, Prettier |
 | Version Control | Git, GitHub |
+| CI/CD | GitHub Actions |
 | Deployment | Vercel |
 
 ## Local Installation and Use
@@ -114,7 +117,7 @@ Follow these steps to run the project on your local machine.
 1. Clone the repository
 
     ```bash
-    git clone https://github.com/alphablue2027/sofi-nails.git
+    git clone https://github.com/chrysalcore/sofi-nails.git
     cd sofi-nails
     ```
 
@@ -147,6 +150,21 @@ Follow these steps to run the project on your local machine.
     npm run start
     # or pnpm build && pnpm start
     ```
+
+### Run tests
+
+```bash
+npm test              # watch mode
+npm run test:run      # single run
+npm run test:coverage # single run with coverage report, used by CI
+npm run typecheck     # tsc --noEmit, used by CI
+```
+
+Unit tests cover the reservation form's Zod schema; an integration test renders the reservation form end-to-end against the real `sendEmail` Server Action, mocking only the Resend SDK at the network boundary.
+
+## CI/CD
+
+A single GitHub Actions workflow (`.github/workflows/ci.yml`) runs on every push to `development`: type-check, lint, the test suite with coverage, and a production build. If it passes, it opens a pull request to `main`. There's no separate deploy workflow — Vercel's native Git integration builds and deploys on every push to `main`.
 
 ## License
 

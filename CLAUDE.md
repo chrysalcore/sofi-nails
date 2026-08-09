@@ -9,6 +9,20 @@ Preferencias generales en `~/.claude/CLAUDE.md` (que cubre solo lo transversal a
 - Badges/tabla de stack en el README deben reflejar versiones reales (`package.json`), no quedarse fijas.
 - `interface` para tipos de datos importados de `_lib/data/` (`Service`, `FAQ`, `Category`, `SocialLink`, `NavLink`); props de componentes siguen el default global (tipo inline).
 
+## Testing y CI/CD (2026-08-09)
+
+Vitest + Testing Library + jsdom, patrón global aplicado por primera vez a un proyecto Next.js App Router (confirmado antes solo en `pokedex-app`, Vite/CRA). Config en `vitest.config.mts`/`vitest.setup.mts` (extensión `.mts`, no `.ts` — evita el warning de Vite por ESM en un package sin `"type": "module"`, mismo motivo que `eslint.config.mjs`). Alias `@` → `src/` espejando `tsconfig.json`. `restoreMocks` + `mockReset` ambos en `true` (Vitest 4, ver gotcha en el `CLAUDE.md` global).
+
+Alcance deliberadamente chico: el único flujo con lógica de negocio real es la reserva por email. El resto del repo son server components renderizando datos tipados sin condicionales, o un `<details name="faq">` nativo sin JS propio — no ganan nada con test dedicado.
+
+- `src/tests/app/reservation/_lib/data/schema.test.ts` — unit, `reservationSchema` (Zod) campo por campo.
+- `src/tests/app/reservation/_components/form/form.test.tsx` — integration, `<Form />` real completado con `userEvent` y enviado de verdad contra `sendEmail` (la Server Action corre sin mockear, igual que el schema); solo se mockea el borde externo real (`resend`, vía `vi.mock` + `vi.hoisted`) y `next/navigation` (`useSearchParams`, porque el componente vive fuera de un App Router real en el test). Cubre éxito, fallo de validación Zod (Resend nunca se llama) y error devuelto por Resend.
+  - **Gotcha:** el mock de `Resend` necesita `mockImplementation(function () {...})` con `function`, no arrow — `new` sobre una arrow function revienta con "is not a constructor", vitest no lo envuelve.
+  - **Gotcha:** jsdom no implementa el bloqueo nativo de `required`/`minLength` en submit (ni con `userEvent.click` ni con `fireEvent.submit`) — no hace falta ningún truco para probar que el schema rechaza un campo inválido, un submit normal ya lo deja pasar hasta la Server Action.
+- `npm run typecheck` (`tsc --noEmit`, script nuevo — no existía) / `test` / `test:run` / `test:coverage`.
+
+`.github/workflows/ci.yml`: push a `development` → typecheck + lint + test:coverage + build, luego abre PR a `main` si no hay uno abierto (mismo shape que `pokedex-app`). **Sin `deploy.yml`** — Vercel ya despliega en push a `main` vía su integración de Git nativa (`.vercel/project.json` confirma el proyecto linkeado); un workflow de deploy paralelo sería redundante. Sin secrets en CI: `next build` no instancia `Resend` (el import es dinámico dentro de la action, solo corre en runtime real). Branch protection en `main` queda pendiente como paso manual — hoy no tiene ninguna, y el status check no aparece en el selector del ruleset hasta que corrió al menos una vez en GitHub.
+
 ## Rendimiento — cerrado (2026-07-26/28)
 
 **Lab, producción, 5 corridas promediadas por página:**
