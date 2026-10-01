@@ -10,6 +10,9 @@ export const size = {
 
 export const contentType = "image/jpeg";
 
+export const alt =
+    "Treatments at Sofi Nails & Lashes Spa, a beauty salon in Salem, VA";
+
 export function generateStaticParams() {
     return Array.from(categories.keys()).map((category) => ({ category }));
 }

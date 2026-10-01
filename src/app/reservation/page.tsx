@@ -3,6 +3,7 @@ import Form from "./_components/form/form";
 import ContactInfo from "./_components/contact/contact-info";
 import type { Metadata } from "next";
 import { contactItemList } from "@/lib/data/contact";
+import { ogImage } from "@/lib/data/og-image";
 
 const hours =
     contactItemList.find((item) => item.name === "Hours")?.text ??
@@ -26,13 +27,13 @@ export const metadata: Metadata = {
         siteName: "Sofi Nails & Lashes Spa",
         locale: "en_US",
         type: "website",
-        images: "https://sofinailsandlashesspa.com/opengraph-image.jpg",
+        images: ogImage,
     },
     twitter: {
         card: "summary_large_image",
         title: `Book an Appointment | Sofi Nails & Lashes Spa`,
         description: `Book nails, lashes, facials, or laser hair removal in Salem, VA. Open ${hours}. Reserve online in a minute or call ${phone}.`,
-        images: "https://sofinailsandlashesspa.com/opengraph-image.jpg",
+        images: ogImage,
     },
 };
 

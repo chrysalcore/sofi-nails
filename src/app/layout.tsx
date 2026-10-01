@@ -12,6 +12,7 @@ import { worksans } from "@/lib/fonts";
 import { preload } from "react-dom";
 import { contactItemList } from "@/lib/data/contact";
 import { socialLinkList } from "@/lib/data/social-links";
+import { ogImage } from "@/lib/data/og-image";
 
 const SITE_URL = "https://sofinailsandlashesspa.com";
 
@@ -29,7 +30,7 @@ export const metadata: Metadata = {
         title: "Sofi Nails & Lashes Spa - Salem's Premier Beauty Destination",
         description:
             "Certified technicians, luxury experience & premium products. Transforming beauty routines since 2020.",
-        images: `${SITE_URL}/opengraph-image.jpg`,
+        images: ogImage,
         url: SITE_URL,
         siteName: "Sofi Nails & Lashes Spa",
         locale: "en_US",
@@ -40,7 +41,7 @@ export const metadata: Metadata = {
         title: "Beauty Salon in Salem VA | Sofi Nails & Lashes Spa",
         description:
             "Professional nail art, eyelash extensions, facial treatments & laser hair removal at 2928 Bent Tree Cir, Salem. 4.9 Stars on Google. Book your luxury experience today!",
-        images: `${SITE_URL}/opengraph-image.jpg`,
+        images: ogImage,
     },
     appleWebApp: {
         title: "SN&LS",

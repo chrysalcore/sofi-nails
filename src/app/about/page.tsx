@@ -2,6 +2,7 @@ import Section from "@/components/global/section";
 import GalleryList from "./_components/gallery-list";
 import type { Metadata } from "next";
 import { contactItemList } from "@/lib/data/contact";
+import { ogImage } from "@/lib/data/og-image";
 
 const address =
     contactItemList.find((item) => item.name === "Address")?.text ??
@@ -22,13 +23,13 @@ export const metadata: Metadata = {
         siteName: "Sofi Nails & Lashes Spa",
         locale: "en_US",
         type: "website",
-        images: "https://sofinailsandlashesspa.com/opengraph-image.jpg",
+        images: ogImage,
     },
     twitter: {
         card: "summary_large_image",
         title: `Nail Salon Since 2020 | Sofi Nails & Lashes Spa`,
         description: `Certified nail and lash technicians at ${address}, rated 4.9 stars on Google. Family-owned since 2020, premium products, personal care.`,
-        images: "https://sofinailsandlashesspa.com/opengraph-image.jpg",
+        images: ogImage,
     },
 };
 
