@@ -4,9 +4,6 @@ import ContactInfo from "./_components/contact/contact-info";
 import type { Metadata } from "next";
 import { contactItemList } from "@/lib/data/contact";
 
-const address =
-    contactItemList.find((item) => item.name === "Address")?.text ??
-    "2928 Bent Tree Cir, Salem, VA";
 const hours =
     contactItemList.find((item) => item.name === "Hours")?.text ??
     "Tuesday - Saturday, 10am - 7pm";
@@ -15,16 +12,16 @@ const phone =
     "+1 (540) 354-5325";
 
 export const metadata: Metadata = {
-    title: `Reservation | Sofi Nails & Lashes Spa`,
-    description: `Book your luxury experience at Sofi Nails & Lashes Spa in Salem, VA (${address}). Hours: ${hours}. Nails, lashes, facials & laser hair removal. Call ${phone}.`,
+    title: `Book an Appointment | Sofi Nails & Lashes Spa`,
+    description: `Book nails, lashes, facials, or laser hair removal in Salem, VA. Open ${hours}. Reserve online in a minute or call ${phone}.`,
     keywords:
         "reservation, appointment, book online, Sofi Nails & Lashes Spa, nails, lashes, facial treatments, laser hair removal, salon Salem VA, eyelash extensions",
     alternates: {
         canonical: "/reservation",
     },
     openGraph: {
-        title: `Reservation | Sofi Nails & Lashes Spa`,
-        description: `Book your luxury experience at Sofi Nails & Lashes Spa in Salem, VA (${address}). Hours: ${hours}. Nails, lashes, facials & laser hair removal. Call ${phone}.`,
+        title: `Book an Appointment | Sofi Nails & Lashes Spa`,
+        description: `Book nails, lashes, facials, or laser hair removal in Salem, VA. Open ${hours}. Reserve online in a minute or call ${phone}.`,
         url: "https://sofinailsandlashesspa.com/reservation",
         siteName: "Sofi Nails & Lashes Spa",
         locale: "en_US",
@@ -33,8 +30,8 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: "summary_large_image",
-        title: `Reservation | Sofi Nails & Lashes Spa`,
-        description: `Book your luxury experience at Sofi Nails & Lashes Spa in Salem, VA (${address}). Hours: ${hours}. Nails, lashes, facials & laser hair removal. Call ${phone}.`,
+        title: `Book an Appointment | Sofi Nails & Lashes Spa`,
+        description: `Book nails, lashes, facials, or laser hair removal in Salem, VA. Open ${hours}. Reserve online in a minute or call ${phone}.`,
         images: "https://sofinailsandlashesspa.com/opengraph-image.jpg",
     },
 };
