@@ -13,27 +13,27 @@ export const sections: Sections = {
         desc: "Get clarity on our services, safety standards, and booking process",
     },
     gallery: {
-        title: "The Essence of Serenity",
-        desc: "Step into our space through the lens. Witness the textures, light, and quiet moments that define us.",
+        title: "Nail Salon Since 2020",
+        desc: "Every visit is guided by certified technicians and premium products, in a space built for you to slow down.",
     },
     categories: {
         title: "Explore Our Offerings",
         desc: "Browse through our thoughtfully organized categories to find exactly what suits your needs and preferences.",
     },
     services: {
-        title: "Transformative Rituals",
-        desc: "Handcrafted treatments to awaken skin, release tension, and restore balance. Each moment is an art of renewal.",
+        title: "Nails, Lashes & Skin Rituals",
+        desc: "Handcrafted nail, lash, and skin treatments — from classic manicures to laser hair removal — using premium products and techniques suited to you.",
     },
     testimonials: {
-        title: "Voices of Renewal",
-        desc: "Authentic reflections from those who have paused, breathed deeply, and emerged transformed.",
+        title: "Real Reviews, Real Results",
+        desc: "Rated 4.9 stars on Google by the Salem, VA community — here's what real clients say about their visit.",
     },
     calendar: {
         title: "Plan Your Visit",
         desc: "Explore our available dates and book your experience with ease. We look forward to welcoming you.",
     },
     reservation: {
-        title: "Secure Your Respite",
-        desc: "Choose your ritual, time, and surrender. We'll prepare the space for your arrival.",
+        title: "Book Your Appointment",
+        desc: "Reserve your nail, lash, facial, or laser hair removal treatment at Sofi Nails & Lashes Spa in Salem, VA — we'll have everything ready for your arrival.",
     },
 };
