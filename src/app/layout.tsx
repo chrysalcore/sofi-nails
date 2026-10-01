@@ -67,6 +67,7 @@ const localBusinessSchema = {
     url: SITE_URL,
     telephone: phone,
     priceRange: "$$",
+    award: "BusinessRate 2025 - Nail Salon Excellence Award",
     address: {
         "@type": "PostalAddress",
         streetAddress: "2928 Bent Tree Cir",
