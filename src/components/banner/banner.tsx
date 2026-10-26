@@ -1,11 +1,12 @@
 import { contactItemList } from "@/lib/data/contact";
 import { CurveDivider } from "../global/curve-divider";
+import { Icon } from "../global/icon";
 
 export default function Banner() {
     const data = contactItemList.slice(3);
 
     return (
-        <div className="bg-deep relative overflow-clip fill-white px-[15dvw] py-28 text-white md:py-40">
+        <div className="bg-deep relative overflow-clip px-[15dvw] py-28 text-white md:py-40">
             <CurveDivider edge="top" />
             <ul className="flex flex-wrap gap-12">
                 {data.map((item) => {
@@ -19,7 +20,7 @@ export default function Banner() {
                                 href={item.href}
                                 rel="noopener noreferrer"
                             >
-                                {item.icon}
+                                <Icon name={item.icon} className="size-6" />
                                 <div className="flex flex-col items-center">
                                     <h2 className="eyebrow">{item.name}</h2>
                                     <p>{item.text}</p>

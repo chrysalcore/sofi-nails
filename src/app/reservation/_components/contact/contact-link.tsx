@@ -1,4 +1,5 @@
 import { ContactItem } from "../../../../lib/data/contact";
+import { Icon } from "@/components/global/icon";
 
 export default function ContactLink({ href, icon, name, text }: ContactItem) {
     return (
@@ -8,8 +9,8 @@ export default function ContactLink({ href, icon, name, text }: ContactItem) {
                 className="flex items-center gap-4"
                 rel="noopener noreferrer"
             >
-                <picture className="bg-secondary/25 fill-main flex place-content-center rounded-xl p-4">
-                    {icon}
+                <picture className="bg-secondary/25 text-main flex place-content-center rounded-xl p-4">
+                    <Icon name={icon} className="size-6" />
                 </picture>
                 <div className="flex w-full flex-col">
                     <h3 className="eyebrow">{name}</h3>
