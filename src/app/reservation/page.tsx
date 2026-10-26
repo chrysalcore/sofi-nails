@@ -39,7 +39,7 @@ export const metadata: Metadata = {
 
 export default function ReservationPage() {
     return (
-        <div className="bt-shape tp-shape relative flex flex-col gap-32 px-4 py-56 lg:px-[15dvw]">
+        <div className="relative flex flex-col gap-32 overflow-clip px-4 py-24 md:py-32 lg:px-[15dvw]">
             <section className="text-secondary relative flex flex-wrap gap-16 overflow-clip bg-white">
                 <ContactInfo />
                 <Suspense fallback={null}>
