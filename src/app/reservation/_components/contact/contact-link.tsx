@@ -12,7 +12,7 @@ export default function ContactLink({ href, icon, name, text }: ContactItem) {
                     {icon}
                 </picture>
                 <div className="flex w-full flex-col">
-                    <h3 className="text-sm font-bold uppercase">{name}</h3>
+                    <h3 className="eyebrow">{name}</h3>
                     <p className="text-secondary/80 break-all">{text}</p>
                 </div>
             </a>
