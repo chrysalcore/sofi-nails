@@ -1,13 +1,24 @@
 "use server";
 
-import { reservationSchema } from "../data/schema";
+import { reservationSchema, type ReservationInput } from "../data/schema";
+
+export type ReservationState =
+    | { status: "idle" }
+    | { status: "error"; error: string }
+    | {
+          status: "sent";
+          reservation: Pick<ReservationInput, "name" | "date" | "subject">;
+      };
 
 const recipient =
     process.env.NODE_ENV === "production"
         ? "contact@sofinailsandlashesspa.com"
         : "delivered@resend.dev";
 
-export async function sendEmail(prevSate: unknown, formData: FormData) {
+export async function sendEmail(
+    prevState: ReservationState,
+    formData: FormData,
+): Promise<ReservationState> {
     const { Resend } = await import("resend");
     const { default: EmailTemplate } =
         await import("../../_components/form/email");
@@ -24,7 +35,7 @@ export async function sendEmail(prevSate: unknown, formData: FormData) {
     });
 
     if (!parsed.success) {
-        return { success: false, error: parsed.error.issues[0].message };
+        return { status: "error", error: parsed.error.issues[0].message };
     }
 
     const { name, email, date, subject, description } = parsed.data;
@@ -45,9 +56,9 @@ export async function sendEmail(prevSate: unknown, formData: FormData) {
 
     if (response.error) {
         return {
-            success: false,
+            status: "error",
             error: `${response.error.message} Email didn't send correctly. Check connection and try again!`,
         };
     }
-    return { success: true, error: null };
+    return { status: "sent", reservation: { name, date, subject } };
 }

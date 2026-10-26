@@ -1,19 +1,23 @@
 "use client";
 
-import { Icon } from "@/components/global/icon";
-
 import { useActionState } from "react";
 import { useSearchParams } from "next/navigation";
+import { Icon } from "@/components/global/icon";
 import { inputsList } from "../../_lib/data/inputs";
-import { sendEmail } from "../../_lib/helper/actions";
+import { sendEmail, type ReservationState } from "../../_lib/helper/actions";
+import { AppointmentCard } from "./appointment-card";
 import Input from "./input";
 
-const initialState = { success: false, error: null };
+const initialState: ReservationState = { status: "idle" };
 
 function Form() {
     const [state, action, isLoading] = useActionState(sendEmail, initialState);
     const searchParams = useSearchParams();
     const defaultSubject = searchParams.get("subject") ?? "";
+
+    if (state.status === "sent") {
+        return <AppointmentCard reservation={state.reservation} />;
+    }
 
     return (
         <form
@@ -37,14 +41,9 @@ function Form() {
                 {isLoading ? "Submitting" : "Submit"}
                 <Icon name="send" className="size-5" />
             </button>
-            {state.error && (
+            {state.status === "error" && (
                 <p className="bg-danger/10 border-danger/60 text-danger flex justify-center rounded-lg border p-4 text-center">
                     {state.error}
-                </p>
-            )}
-            {state.success && (
-                <p className="border-success/60 bg-success/10 text-success flex justify-center rounded-lg border p-4 text-center">
-                    Email sent successfully
                 </p>
             )}
         </form>

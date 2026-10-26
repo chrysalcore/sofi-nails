@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Resend } from "resend";
 import Form from "@/app/reservation/_components/form/form";
@@ -44,15 +44,22 @@ async function fillValidForm() {
 }
 
 describe("Form", () => {
-    it("sends the email and shows a success message", async () => {
+    it("sends the email and replaces the form with the filled appointment card", async () => {
         render(<Form />);
 
         await fillValidForm();
         await userEvent.click(screen.getByRole("button", { name: /submit/i }));
 
+        const card = await screen.findByRole("status", {
+            name: "Appointment request sent",
+        });
+        expect(within(card).getByText("Sofi Perez")).toBeInTheDocument();
+        expect(within(card).getByText("Nail appointment")).toBeInTheDocument();
+        expect(within(card).getByText("Sun, August 9")).toBeInTheDocument();
+        expect(within(card).getByText("10:00 AM")).toBeInTheDocument();
         expect(
-            await screen.findByText("Email sent successfully"),
-        ).toBeInTheDocument();
+            screen.queryByRole("button", { name: /submit/i }),
+        ).not.toBeInTheDocument();
         expect(mockSend).toHaveBeenCalledTimes(1);
         const call = mockSend.mock.calls[0][0];
         expect(call.to).toBe("delivered@resend.dev");
