@@ -28,19 +28,18 @@ function Service({
                     className="h-16 w-16 rounded-full"
                     loading="lazy"
                     src={`/imgs/${img}`}
-                    alt="service img"
+                    alt={info[0].name}
                     width={64}
                     height={64}
                 />
-                <h3 className="text-lg">
+                <h3 className="flex flex-col text-lg">
                     {info.map((i) => (
-                        <p key={i.name}>
+                        <span key={i.name}>
                             {i.name}:{" "}
                             <span className="text-main font-semibold">
                                 ${i.price}
                             </span>
-                            <br />
-                        </p>
+                        </span>
                     ))}
                 </h3>
                 <p className="text-dark/70 line-clamp-5">{desc}</p>

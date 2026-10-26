@@ -1,17 +1,17 @@
 import { contactItemList } from "@/lib/data/contact";
-import Link from "next/link";
+
+const telephone = contactItemList.find((item) => item.name === "Telephone");
 
 export default function HeaderCTA() {
     return (
         <div className="z-20 hidden justify-self-end lg:block">
-            <Link
+            <a
                 className="flex items-center gap-4 fill-white"
-                href="tel:15403545325"
-                rel="noopener, noreferrer"
+                href={telephone?.href}
             >
-                {contactItemList[2].icon}
-                {contactItemList[2].text}
-            </Link>
+                {telephone?.icon}
+                {telephone?.text}
+            </a>
         </div>
     );
 }

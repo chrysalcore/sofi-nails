@@ -28,10 +28,6 @@ export const sections: Sections = {
         title: "Real Reviews, Real Results",
         desc: "Rated 4.9 stars on Google by the Salem, VA community — here's what real clients say about their visit.",
     },
-    calendar: {
-        title: "Plan Your Visit",
-        desc: "Explore our available dates and book your experience with ease. We look forward to welcoming you.",
-    },
     reservation: {
         title: "Book Your Appointment",
         desc: "Reserve your nail, lash, facial, or laser hair removal treatment at Sofi Nails & Lashes Spa in Salem, VA — we'll have everything ready for your arrival.",
