@@ -14,7 +14,7 @@ export default function AsideNav() {
     return (
         <>
             <button
-                className="z-80 justify-self-end fill-white lg:hidden"
+                className="fill-dark z-80 justify-self-end lg:hidden"
                 onClick={onToggleMenu}
                 aria-label={active ? "Close menu" : "Open menu"}
                 aria-expanded={active}
@@ -29,9 +29,9 @@ export default function AsideNav() {
                 </svg>
             </button>
             <nav
-                className={`absolute top-0 left-0 -z-50 flex max-h-0 w-full items-end justify-center overflow-clip bg-[color-mix(in_srgb,#c39870_60%,#fff)] py-4 transition-all lg:hidden ${active ? "max-h-[20dvh] pt-20" : ""}`}
+                className={`border-secondary/30 absolute top-0 left-0 -z-50 flex max-h-0 w-full items-end justify-center overflow-clip border-b bg-white py-4 transition-all lg:hidden ${active ? "max-h-[20dvh] pt-20" : ""}`}
             >
-                <ul className="scroll-none flex max-w-dvw snap-mandatory snap-center gap-6 overflow-auto px-[40dvw]">
+                <ul className="scroll-none flex max-w-full snap-mandatory snap-center gap-6 overflow-auto px-[40dvw]">
                     {navLinkList.map((item) => {
                         return <NavLink key={item.text} {...item} />;
                     })}
