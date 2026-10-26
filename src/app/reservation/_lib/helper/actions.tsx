@@ -2,6 +2,11 @@
 
 import { reservationSchema } from "../data/schema";
 
+const recipient =
+    process.env.NODE_ENV === "production"
+        ? "contact@sofinailsandlashesspa.com"
+        : "delivered@resend.dev";
+
 export async function sendEmail(prevSate: unknown, formData: FormData) {
     const { Resend } = await import("resend");
     const { default: EmailTemplate } =
@@ -26,7 +31,7 @@ export async function sendEmail(prevSate: unknown, formData: FormData) {
 
     const response = await resend.emails.send({
         from: "Sofi Nails Contact Email <contact@sofinailsandlashesspa.com>",
-        to: "contact@sofinailsandlashesspa.com",
+        to: recipient,
         replyTo: email,
         subject: subject,
         html: renderToStaticMarkup(

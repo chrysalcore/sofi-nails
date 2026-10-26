@@ -55,6 +55,7 @@ describe("Form", () => {
         ).toBeInTheDocument();
         expect(mockSend).toHaveBeenCalledTimes(1);
         const call = mockSend.mock.calls[0][0];
+        expect(call.to).toBe("delivered@resend.dev");
         expect(call.replyTo).toBe("sofi@example.com");
         expect(call.subject).toBe("Nail appointment");
     });
