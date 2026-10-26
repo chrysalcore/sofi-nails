@@ -22,8 +22,8 @@ function Service({
     const reservationHref = `${path}?subject=${encodeURIComponent(subject)}`;
 
     return (
-        <li className="text-dark bg-secondary/15 flex flex-col gap-6 rounded-lg p-4">
-            <div className="flex min-h-64 flex-col gap-4">
+        <li className="text-dark bg-secondary/15 ease-smooth flex flex-col gap-6 rounded-lg p-4 shadow-sm/10 transition-shadow duration-300 hover:shadow-lg/15">
+            <div className="flex grow flex-col gap-4">
                 <Image
                     className="h-16 w-16 rounded-full"
                     loading="lazy"
@@ -32,21 +32,21 @@ function Service({
                     width={64}
                     height={64}
                 />
-                <h3 className="flex flex-col text-lg">
+                <h3 className="text-secondary flex flex-col text-lg font-semibold">
                     {info.map((i) => (
                         <span key={i.name}>
                             {i.name}:{" "}
-                            <span className="text-main font-semibold">
+                            <span className="text-dark font-bold">
                                 ${i.price}
                             </span>
                         </span>
                     ))}
                 </h3>
-                <p className="text-dark/70 line-clamp-5">{desc}</p>
+                <p className="line-clamp-5">{desc}</p>
             </div>
             <Link
                 href={reservationHref}
-                className="button bg-main flex items-center gap-2 self-center rounded-2xl fill-white text-white"
+                className="button bg-main flex items-center justify-center gap-2 fill-white text-white"
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"

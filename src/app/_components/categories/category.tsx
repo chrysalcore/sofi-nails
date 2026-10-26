@@ -10,24 +10,24 @@ export default function Category({
     minPrice,
 }: Category) {
     return (
-        <li className="text-dark bg-secondary/15 relative flex max-h-[auto] min-h-100 flex-col items-center justify-between gap-8 overflow-clip rounded-lg pb-4">
-            <div className="flex flex-col items-center gap-4">
+        <li className="group text-dark bg-secondary/15 ease-smooth relative flex min-h-100 flex-col justify-between gap-8 overflow-clip rounded-lg pb-4 shadow-sm/10 transition-shadow duration-300 hover:shadow-lg/15">
+            <div className="flex flex-col gap-4">
                 <picture className="flex aspect-5/2 w-full overflow-clip">
                     <Image
-                        className="w-full"
+                        className="ease-soft w-full transition-transform duration-700 motion-safe:group-hover:scale-105"
                         src={`/imgs/${img}`}
-                        alt={`${title} icon`}
+                        alt={title}
                         width={360}
                         height={144}
                     />
                 </picture>
-                <div className="flex flex-col gap-3 px-4 py-0 text-center">
-                    <h3 className="text-secondary text-lg">{title}</h3>
-                    <p className="text-dark/70">{desc}</p>
+                <div className="flex flex-col gap-3 px-4">
+                    <h3 className="text-secondary text-xl font-semibold">
+                        {title}
+                    </h3>
+                    <p>{desc}</p>
                 </div>
-                <small className="text-main text-2xl font-bold tracking-tighter">
-                    ${minPrice}+
-                </small>
+                <small className="px-4 text-2xl font-bold">${minPrice}+</small>
             </div>
             <CategoryCTA path={path} title={title}>
                 See More

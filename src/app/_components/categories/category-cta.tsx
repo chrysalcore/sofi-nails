@@ -10,9 +10,9 @@ export default function CategoryCTA({
     title: string;
 }) {
     return (
-        <div className="cta">
+        <div className="px-4">
             <Link
-                className="bg-main button flex items-center justify-center gap-2 fill-white text-white"
+                className="button bg-main ease-smooth flex items-center justify-center gap-2 fill-white text-white transition-[gap,scale] duration-300 hover:gap-5"
                 href={`/services/${path}`}
             >
                 {children}
