@@ -100,7 +100,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <DeferredAnalytics gaId="G-44N0ZCHY3Z" />
-            <body className={`text-dark/80 ${worksans.className}`}>
+            <body className={`text-dark ${worksans.className}`}>
                 <script
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{

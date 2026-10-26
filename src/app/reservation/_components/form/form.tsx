@@ -43,12 +43,12 @@ function Form() {
                 </svg>
             </button>
             {state.error && (
-                <p className="bg-main/50 border-main/70 flex justify-center rounded-lg border p-4 text-center text-white">
+                <p className="bg-danger/10 border-danger/60 text-danger flex justify-center rounded-lg border p-4 text-center">
                     {state.error}
                 </p>
             )}
             {state.success && (
-                <p className="flex justify-center rounded-lg border border-emerald-700/70 bg-emerald-200/50 p-4 text-center text-emerald-700">
+                <p className="border-success/60 bg-success/10 text-success flex justify-center rounded-lg border p-4 text-center">
                     Email sent successfully
                 </p>
             )}

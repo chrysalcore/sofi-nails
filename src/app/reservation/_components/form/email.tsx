@@ -79,7 +79,7 @@ export default function EmailTemplate({
                             </h1>
                             <p
                                 style={{
-                                    color: "#6e5b3d",
+                                    color: "#90643c",
                                     fontSize: "18px",
                                     margin: "0",
                                     fontFamily:
@@ -109,7 +109,7 @@ export default function EmailTemplate({
                         >
                             <h2
                                 style={{
-                                    color: "#6e5b3d",
+                                    color: "#90643c",
                                     fontSize: "20px",
                                     margin: "0 0 15px 0",
                                     fontFamily:

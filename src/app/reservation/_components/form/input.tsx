@@ -12,7 +12,7 @@ export default function Input({
         <label className="flex flex-col" htmlFor={name}>
             {isInLine ? (
                 <input
-                    className="text-dark border-secondary/50 focus-visible:border-secondary placeholder:text-secondary/80 user-invalid:text-main user-invalid:border-main user-invalid:focus-visible:border-main w-full rounded-lg border px-4 py-3 transition-colors focus-visible:border-2 focus-visible:outline-none"
+                    className="text-dark border-secondary/50 focus-visible:border-secondary placeholder:text-secondary/80 user-invalid:text-danger user-invalid:border-danger user-invalid:focus-visible:border-danger w-full rounded-lg border px-4 py-3 transition-colors focus-visible:border-2 focus-visible:outline-none"
                     type={type}
                     name={name}
                     id={name}
@@ -23,7 +23,7 @@ export default function Input({
                 />
             ) : (
                 <textarea
-                    className="text-dark border-secondary/50 focus-visible:border-secondary placeholder:text-secondary/80 user-invalid:text-main user-invalid:border-main user-invalid:focus-visible:border-main resize-none overflow-y-auto rounded-lg border px-4 py-3 transition-colors focus-visible:border-2 focus-visible:outline-none"
+                    className="text-dark border-secondary/50 focus-visible:border-secondary placeholder:text-secondary/80 user-invalid:text-danger user-invalid:border-danger user-invalid:focus-visible:border-danger resize-none overflow-y-auto rounded-lg border px-4 py-3 transition-colors focus-visible:border-2 focus-visible:outline-none"
                     name={name}
                     id={name}
                     placeholder={placeholder}
