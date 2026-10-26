@@ -1,12 +1,18 @@
 import { navLinkList } from "@/lib/data/navigation";
 import Link from "next/link";
 
-export default function HeroCTA({ children }: { children: React.ReactNode }) {
+export default function HeroCTA({
+    children,
+    className,
+}: {
+    children: React.ReactNode;
+    className?: string;
+}) {
     const path =
         navLinkList.find((item) => item.text === "Reservation")?.path || "";
 
     return (
-        <div>
+        <div className={className}>
             <Link
                 href={path}
                 className="button bg-main flex items-center gap-2 rounded-2xl fill-white text-white"

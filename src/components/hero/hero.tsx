@@ -6,7 +6,7 @@ import Title from "../global/title";
 
 export default function Hero() {
     return (
-        <section className="bg-hero-vertical bt-shape lg:bg-hero-horizontal relative flex min-h-dvh flex-col place-items-center gap-24 overflow-clip bg-cover! bg-center! px-4 py-48 text-center lg:flex-row lg:place-items-stretch lg:justify-between lg:bg-cover! lg:bg-center! lg:px-[15dvw]">
+        <section className="bg-hero-vertical lg:bg-hero-horizontal relative flex min-h-dvh flex-col place-items-center gap-24 overflow-clip bg-cover! bg-center! px-4 py-48 text-center lg:flex-row lg:place-items-stretch lg:justify-between lg:bg-cover! lg:bg-center! lg:px-[15dvw]">
             <div className="flex min-h-120 flex-col items-center justify-center gap-12">
                 <div className="relative flex min-h-44 flex-row items-center gap-4">
                     <Image
@@ -19,18 +19,22 @@ export default function Hero() {
                     />
                     <Title isMainTitle />
                 </div>
-                <div className="flex max-w-120 flex-col tracking-widest">
-                    <p className="">
+                <div className="flex max-w-120 flex-col leading-relaxed">
+                    <p>
                         Where the scent of eucalyptus meets silence, and the
                         world outside fades into soft light. Begin your journey
                         here.
                     </p>
                 </div>
-                <HeroCTA>Book Now</HeroCTA>
+                <HeroCTA className="animate-enter enter-delay-150">
+                    Book Now
+                </HeroCTA>
             </div>
-            <div className="flex flex-col items-center justify-center gap-16">
-                <Award />
-                <SocialInfo />
+            <div className="flex flex-col items-center justify-center">
+                <div className="animate-enter enter-delay-300 flex flex-col items-center gap-6 rounded-2xl bg-white/70 p-6 shadow-sm/10 backdrop-blur-sm">
+                    <Award />
+                    <SocialInfo />
+                </div>
             </div>
         </section>
     );

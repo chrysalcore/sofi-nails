@@ -8,7 +8,7 @@ export default function SocialLink({ path, icon, text }: SocialLink) {
                 <Image
                     src={`/icons/${icon}`}
                     alt={`${text} icon`}
-                    className="h-8 w-8"
+                    className="size-7"
                     width={32}
                     height={32}
                 />
