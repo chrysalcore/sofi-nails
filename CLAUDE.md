@@ -152,7 +152,7 @@ El logo (`public/icons/sofi-logo.svg`) usa solo dos colores: `#c39870` (beige) y
 ### Pendiente de esta pasada
 
 - **Aprobación de `styles`** por Ordnay; después, PR/merge a `development` y deploy.
-- **D.** Aparición al hacer scroll (`useReveal` de `molino_rojo` envolviendo el contenido de `Section`). Ocultar solo **después** de que monte el JS.
+- **D.** Aparición al hacer scroll con CSS (`animation-timeline: view()` dentro de `@supports` y `prefers-reduced-motion`), no con el `useReveal` de `molino_rojo`: así `Section` sigue siendo Server Component y sin soporte el contenido se ve igual (decidido con Ordnay 2026-10-26).
 - **E.** `<ViewTransition>` para el cambio de categoría en `/services` (guía en `node_modules/next/dist/docs/01-app/02-guides/view-transitions.md`) y menú móvil con `translate` en vez de `max-height`.
 - **F.** Ticket de confirmación al enviar el formulario, con sello **"Request Sent"** (no "Confirmed": el salón confirma después).
 - Abierto: `CurveDivider` usa export nombrado y el resto del repo `export default` (convención global: nombrados; alinear al tocar cada archivo). Set de íconos SVG único. Encuadre de la foto del hero (la tarjeta del premio tapa la cara en escritorio; Ordnay lo dejó así por ahora).
