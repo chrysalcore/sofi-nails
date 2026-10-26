@@ -13,7 +13,7 @@ export const serviceKeywords: Record<string, string[]> = {
         "builder gel",
         "man pedicure",
     ],
-    browns: [
+    brows: [
         "eyebrows",
         "eyebrow tattoo",
         "powder brows",
@@ -21,7 +21,6 @@ export const serviceKeywords: Record<string, string[]> = {
         "brow shaping",
         "architectural brow design",
         "brow tattoo",
-        "powders browns",
     ],
     lashes: [
         "lash extensions",
@@ -44,7 +43,7 @@ export const serviceKeywords: Record<string, string[]> = {
         "oxygen facial",
         "hydrogen oxygen facial",
         "high frequency facial",
-        "high frecuency treatment",
+        "high frequency treatment",
         "led light therapy",
         "led lights treatment",
         "acne facial",

@@ -51,7 +51,7 @@ describe("Form", () => {
         await userEvent.click(screen.getByRole("button", { name: /submit/i }));
 
         expect(
-            await screen.findByText("Email sended successfully"),
+            await screen.findByText("Email sent successfully"),
         ).toBeInTheDocument();
         expect(mockSend).toHaveBeenCalledTimes(1);
         const call = mockSend.mock.calls[0][0];

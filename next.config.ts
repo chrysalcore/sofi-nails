@@ -9,6 +9,11 @@ const nextConfig: NextConfig = {
                 destination: "/services/nails",
                 permanent: true,
             },
+            {
+                source: "/services/browns",
+                destination: "/services/brows",
+                permanent: true,
+            },
         ];
     },
 };

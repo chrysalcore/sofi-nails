@@ -20,12 +20,12 @@ export const categories: Map<string, Category> = new Map([
         },
     ],
     [
-        "browns",
+        "brows",
         {
-            name: "Browns",
-            path: "browns",
+            name: "Brows",
+            path: "brows",
             img: "browns.webp",
-            title: "Browns Sculpt",
+            title: "Brow Sculpting",
             desc: "Architectural brow design without waxing. We map your brows to harmonize with your facial features for natural-looking definition.",
             minPrice: 350,
         },

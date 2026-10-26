@@ -32,7 +32,7 @@ function Form() {
                 className="button bg-main flex items-center justify-center gap-2 rounded-2xl fill-white text-white"
                 type="submit"
             >
-                {isLoading ? "Submiting" : "Submit"}
+                {isLoading ? "Submitting" : "Submit"}
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width={28}
@@ -49,7 +49,7 @@ function Form() {
             )}
             {state.success && (
                 <p className="flex justify-center rounded-lg border border-emerald-700/70 bg-emerald-200/50 p-4 text-center text-emerald-700">
-                    Email sended successfully
+                    Email sent successfully
                 </p>
             )}
         </form>
