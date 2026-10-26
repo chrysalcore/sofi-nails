@@ -45,14 +45,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ServicePage({ params }: Props) {
     const { category } = await params;
 
-    const services = serviceList.find(
-        (item) => item.category.path === category,
-    )?.services;
+    const group = serviceList.find((item) => item.category.path === category);
 
     return (
         <ul className="grid grid-cols-1 justify-center gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {services?.map((item) => (
-                <Service {...item} key={item.info[0].name} />
+            {group?.services.map((item) => (
+                <Service
+                    {...item}
+                    categoryName={group.category.name}
+                    key={item.info[0].name}
+                />
             ))}
         </ul>
     );

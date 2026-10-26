@@ -3,10 +3,12 @@ import Image from "next/image";
 import Link from "next/link";
 
 function Service({
+    categoryName,
     img,
     desc,
     info,
 }: {
+    categoryName: string;
     img: string;
     desc: string;
     info: {
@@ -16,7 +18,7 @@ function Service({
 }) {
     const path =
         navLinkList.find((item) => item.text === "Reservation")?.path || "";
-    const subject = info[0].name;
+    const subject = `${categoryName} – ${info[0].name}`;
     const reservationHref = `${path}?subject=${encodeURIComponent(subject)}`;
 
     return (
