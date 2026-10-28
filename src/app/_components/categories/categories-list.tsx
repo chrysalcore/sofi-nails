@@ -11,7 +11,7 @@ export default function CategoriesList() {
                     <Category {...value} key={value.path} />
                 ))}
             </ul>
-            <div className="bg-secondary/15 border-secondary/40 flex flex-col items-center self-stretch rounded-2xl border p-8 text-center">
+            <div className="animate-reveal bg-secondary/15 border-secondary/40 flex flex-col items-center self-stretch rounded-2xl border p-8 text-center">
                 <h3 className="text-dark eyebrow">Important!</h3>
                 <strong className="text-dark/80 max-w-160 font-normal">
                     Please note that all hair removal prices listed are per

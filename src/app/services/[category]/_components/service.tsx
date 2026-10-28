@@ -23,7 +23,7 @@ function Service({
     const reservationHref = `${path}?subject=${encodeURIComponent(subject)}`;
 
     return (
-        <li className="text-dark bg-secondary/15 ease-smooth flex flex-col gap-6 rounded-lg p-4 shadow-sm/10 transition-shadow duration-300 hover:shadow-lg/15">
+        <li className="animate-reveal text-dark bg-secondary/15 ease-smooth flex flex-col gap-6 rounded-lg p-4 shadow-sm/10 transition-shadow duration-300 hover:shadow-lg/15">
             <div className="flex grow flex-col gap-4">
                 <Image
                     className="h-16 w-16 rounded-full"

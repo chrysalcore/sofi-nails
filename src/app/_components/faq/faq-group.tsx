@@ -6,7 +6,7 @@ export default function FAQGroup({
     children: React.ReactNode;
 }) {
     return (
-        <section className="flex grow basis-[min(15rem,100%)] flex-col gap-6">
+        <section className="animate-reveal flex grow basis-[min(15rem,100%)] flex-col gap-6">
             <h3 className="flex min-h-14 items-end border-b border-white/40 py-2 text-sm font-medium tracking-widest text-balance text-white/85 uppercase">
                 {groupName}
             </h3>

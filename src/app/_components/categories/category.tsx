@@ -10,7 +10,7 @@ export default function Category({
     minPrice,
 }: Category) {
     return (
-        <li className="group text-dark bg-secondary/15 ease-smooth relative flex min-h-100 flex-col justify-between gap-8 overflow-clip rounded-lg pb-4 shadow-sm/10 transition-shadow duration-300 hover:shadow-lg/15">
+        <li className="group animate-reveal text-dark bg-secondary/15 ease-smooth relative flex min-h-100 flex-col justify-between gap-8 overflow-clip rounded-lg pb-4 shadow-sm/10 transition-shadow duration-300 hover:shadow-lg/15">
             <div className="flex flex-col gap-4">
                 <picture className="flex aspect-5/2 w-full overflow-clip">
                     <Image
