@@ -96,9 +96,9 @@ Mobile es ~toda la muestra (25/26 INP, 27/28 LCP). Por ruta, INP P75: `/` 40ms, 
 
 `category-cta.tsx` pasó de `<button onClick={router.push}>` a `<Link>` (para recuperar prefetch). Las 8 CTAs del home quedaron con anchor text genérico idéntico ("See More"), el audit `link-text` empezó a fallar: SEO del home 100 → 92 en producción. **`core/audits/seo/link-text.js` evalúa solo `innerText`; un `aria-label` no lo satisface** (verificado leyendo el fuente y probándolo aislado) — coincide con la señal real, Google usa el anchor text. Corregido con `<span className="sr-only">{` about ${title}`}</span>` (ojo: `{children}` + `<span>` en líneas separadas no emite espacio en JSX, usar template literal).
 
-## Estilos y movimiento (pasada del 2026-10-22 al 26)
+## Estilos y movimiento (pasada del 2026-10-22 al 27)
 
-**Ramas:** los arreglos de bugs de la pasada están en `development` (6 commits del 2026-10-26). Lo visual vive en la rama **`styles`**, creada desde `development` y **pendiente de aprobación** por Ordnay: no mergear a `development` hasta que lo apruebe.
+**Ramas:** los arreglos de bugs de la pasada están en `development` (6 commits del 2026-10-26 más la validación de horario del 2026-10-28). Lo visual vive en la rama **`styles`**, creada desde `development` y **pendiente de aprobación** por Ordnay: no mergear a `development` hasta que lo apruebe. Los bugs nuevos se arreglan en `development` y se mergean en `styles` (no al revés).
 
 ### Paleta (`@theme` en `globals.css`)
 
@@ -132,6 +132,10 @@ El logo (`public/icons/sofi-logo.svg`) usa solo dos colores: `#c39870` (beige) y
 - FAQ: sin tarjetas, sobre `deep`. Grupo como etiqueta (`text-sm` mayúscula, `white/85`, línea `white/40`); preguntas `font-medium` separadas por `gap-6`, sin líneas.
 - Movimiento: `ease-smooth` / `ease-soft` en `@theme` (mismas que `molino_rojo`); entrada del hero con `@utility animate-enter` + `enter-delay-*` solo en botón y tarjeta del premio. **Logo, título y párrafo del hero quedan fijos: candidatos a LCP.** Todo con `motion-safe:`.
 - `:focus-visible` global: contorno `dark` 2px, offset 2px.
+- **Íconos:** un solo set relleno y redondeado en `global/icon.tsx` (`<Icon name>`): Material Symbols Rounded para la interfaz y glifos rellenos para las marcas, con el tipo `IconName` derivado de los dos mapas. Los datos (`contact.tsx`, `social-links.ts`) guardan el nombre del ícono, no el SVG. Los `.svg` sueltos de `public/icons/` se borraron (queda solo el logo).
+- **Aparición al scrollear (D):** `@utility animate-reveal` con `animation-timeline: view()` y `animation-range: entry 0% cover 25%`, dentro de `@supports` y `prefers-reduced-motion: no-preference`. Sin JS, así `Section` sigue siendo Server Component; sin soporte o con movimiento reducido el contenido se ve fijo. Aplicado a encabezados, tarjetas, grupos del FAQ y fotos de la galería. Se descartó el `useReveal` de `molino_rojo`.
+- **Cambio de categoría en `/services` (E):** la grilla va dentro de `<ViewTransition key={category}>` de React, que hace un fundido cruzado entre categorías. Menú móvil con `translate` + `invisible` en vez de `max-height`: cerrado queda fuera del orden de tabulación.
+- **Reserva enviada (F):** el formulario se reemplaza por `appointment-card.tsx`, una ficha de cita con nombre, servicio, fecha y hora, firmada "— Belkis" con `role="status"`. Dice "Appointment request" y "We'll confirm your appointment by email shortly", no "Confirmed": el salón confirma después. La action devuelve una unión discriminada (`idle` / `error` / `sent` con los datos ya validados por Zod).
 
 ### Bugs encontrados y corregidos (en `development`)
 
@@ -141,6 +145,10 @@ El logo (`public/icons/sofi-logo.svg`) usa solo dos colores: `#c39870` (beige) y
 - **Botón "Book" de servicios:** 20 de 37 servicios precargaban un asunto de menos de los 10 caracteres que exige Zod; la reserva fallaba después de enviar (`minLength` del navegador solo valida valores editados por la usuaria). Ahora el asunto es `"<categoría> – <servicio>"`.
 - Header con `w-dvw` (incluye la scrollbar) → `inset-x-0`; `<p>` dentro de `<h3>` en `service.tsx`; teléfono del header por índice `[2]`; comilla suelta en el `href` del calendario del email; clases inexistentes y `calendar.tsx` sin uso.
 - Textos: "Submiting", "Email sended", alts genéricos, premio rotulado "GOOGLE" (es BusinessRate), evento de Google Calendar en español, **"Browns" → "Brows"** con redirect 308, "High Frecuency" → "Frequency".
+- **La reserva aceptaba cualquier fecha y hora (2026-10-28, desde el lanzamiento):** el schema solo exigía formato ISO, así que se podía reservar en el pasado, un domingo o a las 3 AM, y el email le llegaba igual al salón. El propio test enviaba una reserva para un domingo ya pasado. Ahora `date` encadena tres `.refine` con `abort: true`: fecha futura, día abierto y hora dentro del horario. Además, de 18:01 a 18:59 da un mensaje propio que explica que el último turno empieza a las 18:00 para terminar antes del cierre. Detalles:
+  - **Horario en una sola fuente:** `src/lib/data/hours.ts` (`timeZone`, `days`, `opens`, `lastBooking`, `closes`, más `formatHour` y `hoursText`). De ahí salen el schema y sus mensajes, el JSON-LD de `layout.tsx`, el ítem "Hours" de `contact.tsx` y la description de `/reservation`. Para cambiar el horario se toca solo ese archivo.
+  - **Zona horaria:** `datetime-local` envía la hora sin zona y en Vercel el servidor corre en UTC. Por eso el día y la hora se leen del texto, no con `getHours()`, y "ahora" se calcula en `America/New_York` con `toLocaleString("sv-SE", { timeZone })`. Hay un test que lo cubre: a las 16:00 UTC (11:00 en Salem), el mediodía de ese mismo día tiene que aceptarse.
+  - **Tests con el reloj congelado:** `vi.useFakeTimers({ toFake: ["Date"] })` reemplaza solo `Date` y deja `setTimeout` real, así `userEvent` sigue funcionando. Sin eso, el test se pondría rojo solo el día que su fecha quedara en el pasado.
 
 ### Gotchas del entorno
 
@@ -152,13 +160,13 @@ El logo (`public/icons/sofi-logo.svg`) usa solo dos colores: `#c39870` (beige) y
 ### Pendiente de esta pasada
 
 - **Aprobación de `styles`** por Ordnay; después, PR/merge a `development` y deploy.
-- **D.** Aparición al hacer scroll con CSS (`animation-timeline: view()` dentro de `@supports` y `prefers-reduced-motion`), no con el `useReveal` de `molino_rojo`: así `Section` sigue siendo Server Component y sin soporte el contenido se ve igual (decidido con Ordnay 2026-10-26).
-- **E.** `<ViewTransition>` para el cambio de categoría en `/services` (guía en `node_modules/next/dist/docs/01-app/02-guides/view-transitions.md`) y menú móvil con `translate` en vez de `max-height`.
-- **F.** Ticket de confirmación al enviar el formulario, con sello **"Request Sent"** (no "Confirmed": el salón confirma después).
-- Abierto: `CurveDivider` usa export nombrado y el resto del repo `export default` (convención global: nombrados; alinear al tocar cada archivo). Set de íconos SVG único. Encuadre de la foto del hero (la tarjeta del premio tapa la cara en escritorio; Ordnay lo dejó así por ahora).
+- Los pasos D, E y F y el set de íconos están hechos y commiteados en `styles` (2026-10-26/27, ver "Tipografía y componentes").
+- Abierto: `CurveDivider` e `Icon` usan export nombrado y el resto del repo `export default` (convención global: nombrados; alinear al tocar cada archivo). Encuadre de la foto del hero (la tarjeta del premio tapa la cara en escritorio; Ordnay lo dejó así por ahora). ESLint revisa `coverage/` (generado) y da una advertencia: agregarlo a los ignores.
 - Después del deploy: medir LCP en Speed Insights (el elemento LCP pasó del párrafo al logo).
 
 ## Pendiente (orden de impacto)
 
 - **Medir el efecto del copywriting** de `/about` y `/reservation` (deploy 2026-10-01) con ventanas de 28 días, leyéndolo contra la estacionalidad (ver la ficha de gestión: la demanda local cae ~38% de mayo a octubre).
+- **Validación de horario en producción:** hoy el sitio en vivo sigue aceptando reservas fuera de horario. El fix está en `development` (`cd214ef`) y en `styles`, y llega con el próximo deploy.
+- **Arreglar `www`:** agregar el subdominio en Vercel como redirect 308 al apex (hoy `https://www.…` da error SSL).
 - **Contraste de footer/nav/FAQ** (blanco sobre beige, 1.9:1): resuelto en la rama `styles` con la paleta nueva (header blanco con texto `dark`, banner/FAQ/footer sobre `deep`). Llega a producción cuando se apruebe `styles`.
