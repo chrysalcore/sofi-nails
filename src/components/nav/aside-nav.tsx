@@ -24,7 +24,7 @@ export default function AsideNav() {
                 <Icon name={active ? "close" : "menu"} className="size-7" />
             </button>
             <nav
-                className={`border-secondary/30 absolute top-0 left-0 -z-50 flex max-h-0 w-full items-end justify-center overflow-clip border-b bg-white py-4 transition-all lg:hidden ${active ? "max-h-[20dvh] pt-20" : ""}`}
+                className={`border-secondary/30 ease-smooth absolute top-0 left-0 -z-50 flex w-full items-end justify-center border-b bg-white pt-20 pb-4 transition-[translate,visibility] duration-300 motion-reduce:transition-none lg:hidden ${active ? "translate-y-0" : "invisible -translate-y-full"}`}
             >
                 <ul className="scroll-none flex max-w-full snap-mandatory snap-center gap-6 overflow-auto px-[40dvw]">
                     {navLinkList.map((item) => {

@@ -46,6 +46,18 @@
     }
 }
 
+::view-transition {
+    pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+        animation-duration: 0s !important;
+    }
+}
+
 @utility shadow-on-scroll {
     animation: scrolled-shadow linear both;
     animation-timeline: scroll(root);
