@@ -13,6 +13,7 @@ import { preload } from "react-dom";
 import { contactItemList } from "@/lib/data/contact";
 import { socialLinkList } from "@/lib/data/social-links";
 import { ogImage } from "@/lib/data/og-image";
+import { openingHours } from "@/lib/data/hours";
 
 const SITE_URL = "https://sofinailsandlashesspa.com";
 
@@ -83,9 +84,9 @@ const localBusinessSchema = {
     },
     openingHoursSpecification: {
         "@type": "OpeningHoursSpecification",
-        dayOfWeek: ["Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-        opens: "10:00",
-        closes: "19:00",
+        dayOfWeek: openingHours.days,
+        opens: openingHours.opens,
+        closes: openingHours.closes,
     },
     sameAs: socialLinkList.map((item) => item.path),
 };

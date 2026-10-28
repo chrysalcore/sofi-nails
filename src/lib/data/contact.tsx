@@ -1,4 +1,5 @@
 import type { IconName } from "@/components/global/icon";
+import { hoursText } from "@/lib/data/hours";
 
 export interface ContactItem {
     href: string;
@@ -36,6 +37,6 @@ export const contactItemList: ContactItem[] = [
         href: "https://calendar.google.com/calendar/render?action=TEMPLATE&text=Sofi%20Nails%20%26%20Lashes%20Spa&details=Location:%20https://maps.google.com/?q=2928+Bent+Tree+Cir,+Salem,+VA&location=2928%20Bent%20Tree%20Cir,%20Salem,%20VA%2024153",
         icon: "clock",
         name: "Hours",
-        text: "Tuesday - Saturday, 10am - 7pm",
+        text: hoursText,
     },
 ];

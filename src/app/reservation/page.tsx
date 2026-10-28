@@ -4,17 +4,15 @@ import ContactInfo from "./_components/contact/contact-info";
 import type { Metadata } from "next";
 import { contactItemList } from "@/lib/data/contact";
 import { ogImage } from "@/lib/data/og-image";
+import { hoursText } from "@/lib/data/hours";
 
-const hours =
-    contactItemList.find((item) => item.name === "Hours")?.text ??
-    "Tuesday - Saturday, 10am - 7pm";
 const phone =
     contactItemList.find((item) => item.name === "Telephone")?.text ??
     "+1 (540) 354-5325";
 
 export const metadata: Metadata = {
     title: `Book an Appointment | Sofi Nails & Lashes Spa`,
-    description: `Book nails, lashes, facials, or laser hair removal in Salem, VA. Open ${hours}. Reserve online in a minute or call ${phone}.`,
+    description: `Book nails, lashes, facials, or laser hair removal in Salem, VA. Open ${hoursText}. Reserve online in a minute or call ${phone}.`,
     keywords:
         "reservation, appointment, book online, Sofi Nails & Lashes Spa, nails, lashes, facial treatments, laser hair removal, salon Salem VA, eyelash extensions",
     alternates: {
@@ -22,7 +20,7 @@ export const metadata: Metadata = {
     },
     openGraph: {
         title: `Book an Appointment | Sofi Nails & Lashes Spa`,
-        description: `Book nails, lashes, facials, or laser hair removal in Salem, VA. Open ${hours}. Reserve online in a minute or call ${phone}.`,
+        description: `Book nails, lashes, facials, or laser hair removal in Salem, VA. Open ${hoursText}. Reserve online in a minute or call ${phone}.`,
         url: "https://sofinailsandlashesspa.com/reservation",
         siteName: "Sofi Nails & Lashes Spa",
         locale: "en_US",
@@ -32,7 +30,7 @@ export const metadata: Metadata = {
     twitter: {
         card: "summary_large_image",
         title: `Book an Appointment | Sofi Nails & Lashes Spa`,
-        description: `Book nails, lashes, facials, or laser hair removal in Salem, VA. Open ${hours}. Reserve online in a minute or call ${phone}.`,
+        description: `Book nails, lashes, facials, or laser hair removal in Salem, VA. Open ${hoursText}. Reserve online in a minute or call ${phone}.`,
         images: ogImage,
     },
 };
