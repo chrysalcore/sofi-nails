@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Resend } from "resend";
@@ -15,10 +15,16 @@ vi.mock("next/navigation", () => ({
 }));
 
 beforeEach(() => {
+    vi.useFakeTimers({ toFake: ["Date"] });
+    vi.setSystemTime(new Date("2026-11-01T12:00:00Z"));
     vi.mocked(Resend).mockImplementation(function () {
         return { emails: { send: mockSend } } as unknown as Resend;
     });
     mockSend.mockResolvedValue({ data: { id: "email_123" }, error: null });
+});
+
+afterEach(() => {
+    vi.useRealTimers();
 });
 
 async function fillValidForm() {
@@ -31,7 +37,7 @@ async function fillValidForm() {
         "sofi@example.com",
     );
     fireEvent.change(screen.getByPlaceholderText("01/01/2000"), {
-        target: { value: "2026-08-09T10:00" },
+        target: { value: "2026-11-03T10:00" },
     });
     await userEvent.type(
         screen.getByPlaceholderText("Manicure"),

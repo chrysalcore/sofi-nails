@@ -1,3 +1,5 @@
+import { hoursText } from "@/lib/data/hours";
+
 export interface ContactItem {
     href: string;
     icon: React.ReactElement;
@@ -79,6 +81,6 @@ export const contactItemList: ContactItem[] = [
             </svg>
         ),
         name: "Hours",
-        text: "Tuesday - Saturday, 10am - 7pm",
+        text: hoursText,
     },
 ];
