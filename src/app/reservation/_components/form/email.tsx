@@ -79,7 +79,7 @@ export default function EmailTemplate({
                             </h1>
                             <p
                                 style={{
-                                    color: "#6e5b3d",
+                                    color: "#90643c",
                                     fontSize: "18px",
                                     margin: "0",
                                     fontFamily:
@@ -109,7 +109,7 @@ export default function EmailTemplate({
                         >
                             <h2
                                 style={{
-                                    color: "#6e5b3d",
+                                    color: "#90643c",
                                     fontSize: "20px",
                                     margin: "0 0 15px 0",
                                     fontFamily:
@@ -139,7 +139,7 @@ export default function EmailTemplate({
                             }}
                         >
                             <a
-                                href={`https://calendar.google.com/calendar/render?action=TEMPLATE&text=Evento&details=Ubicaci%C3%B3n:%20https://maps.google.com/?q=2928+Bent+Tree+Cir,+Salem,+VA&location=2928%20Bent%20Tree%20Cir,%20Salem,%20VA%2024153'`}
+                                href={`https://calendar.google.com/calendar/render?action=TEMPLATE&text=Evento&details=Ubicaci%C3%B3n:%20https://maps.google.com/?q=2928+Bent+Tree+Cir,+Salem,+VA&location=2928%20Bent%20Tree%20Cir,%20Salem,%20VA%2024153`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 style={{

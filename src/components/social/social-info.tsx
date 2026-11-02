@@ -3,7 +3,7 @@ import SocialLink from "./social-link";
 
 export default function SocialInfo() {
     return (
-        <ul className="flex items-end gap-16">
+        <ul className="flex items-end gap-10">
             {socialLinkList.map((item) => (
                 <SocialLink {...item} key={item.text} />
             ))}

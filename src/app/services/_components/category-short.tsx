@@ -9,7 +9,7 @@ export default function CategoryShort({
     return (
         <li>
             <Link
-                className={`block rounded-full px-8 py-4 text-center whitespace-nowrap capitalize transition-colors ${isActive ? "bg-secondary/35 text-dark font-bold" : "bg-secondary/15"}`}
+                className={`ease-smooth block rounded-full px-8 py-4 text-center whitespace-nowrap capitalize transition-[background-color,scale] duration-200 motion-safe:active:scale-95 ${isActive ? "bg-secondary/35 text-dark font-bold" : "bg-secondary/15"}`}
                 href={`/services/${path}`}
             >
                 {name}

@@ -13,6 +13,7 @@ import { preload } from "react-dom";
 import { contactItemList } from "@/lib/data/contact";
 import { socialLinkList } from "@/lib/data/social-links";
 import { ogImage } from "@/lib/data/og-image";
+import { openingHours } from "@/lib/data/hours";
 
 const SITE_URL = "https://sofinailsandlashesspa.com";
 
@@ -22,7 +23,7 @@ export const metadata: Metadata = {
     description:
         "Professional nail art, eyelash extensions, facial treatments & laser hair removal at 2928 Bent Tree Cir, Salem. 4.9 Stars on Google. Book your luxury experience today!",
     keywords:
-        "Sofi's Spa, nails, lashes, spa, eyebrowns, facials, manicure, pedicure, laser hair removal, hair removal, nail salon Salem VA, eyelash extensions, facial treatments, Roanoke Valley",
+        "Sofi's Spa, nails, lashes, spa, eyebrows, facials, manicure, pedicure, laser hair removal, hair removal, nail salon Salem VA, eyelash extensions, facial treatments, Roanoke Valley",
     alternates: {
         canonical: "/",
     },
@@ -83,9 +84,9 @@ const localBusinessSchema = {
     },
     openingHoursSpecification: {
         "@type": "OpeningHoursSpecification",
-        dayOfWeek: ["Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-        opens: "10:00",
-        closes: "19:00",
+        dayOfWeek: openingHours.days,
+        opens: openingHours.opens,
+        closes: openingHours.closes,
     },
     sameAs: socialLinkList.map((item) => item.path),
 };
@@ -100,7 +101,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <DeferredAnalytics gaId="G-44N0ZCHY3Z" />
-            <body className={`text-dark/80 ${worksans.className}`}>
+            <body className={`text-dark ${worksans.className}`}>
                 <script
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{
@@ -108,7 +109,7 @@ export default function RootLayout({
                     }}
                 />
                 <Header />
-                <main className="main">
+                <main>
                     <Hero />
                     <Banner />
                     {children}

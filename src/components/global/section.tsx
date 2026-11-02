@@ -1,4 +1,5 @@
 import SectionHeader from "./section-header";
+import { CurveDivider } from "./curve-divider";
 import { sections } from "../../lib/data/sections";
 
 export default function Section({
@@ -11,16 +12,18 @@ export default function Section({
     isLight?: boolean;
 }) {
     const theme = {
-        dark: "text-white py-24 px-4 lg:py-24 lg:px-[15dvw] bg-[color-mix(in_srgb,#c39870_70%,#fff)]",
-        light: "text-secondary py-56 px-4 lg:px-[15dvw] bg-white bt-shape tp-shape",
+        dark: "text-white py-32 md:py-48 px-4 lg:px-[15dvw] bg-deep",
+        light: "text-secondary py-24 md:py-32 px-4 lg:px-[15dvw] bg-white",
     };
 
     return (
         <section
             className={`relative flex flex-col items-center gap-16 overflow-clip ${isLight ? theme.light : theme.dark}`}
         >
+            {!isLight && <CurveDivider edge="top" />}
             <SectionHeader {...sections[type]} />
             {children}
+            {!isLight && <CurveDivider edge="bottom" />}
         </section>
     );
 }

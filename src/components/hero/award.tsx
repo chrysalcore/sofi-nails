@@ -1,28 +1,20 @@
 import Image from "next/image";
 
-function Award() {
+export default function Award() {
     return (
-        <figure className="relative flex flex-col items-center rounded-lg bg-white/50">
+        <figure className="flex flex-col items-center gap-3">
             <Image
-                className="w-48 p-4"
+                className="w-32"
                 src={"/imgs/award.png"}
-                alt="business rate award"
+                alt="BusinessRate 2025 Nail Salon Excellence Award plaque"
                 width={192}
                 height={225}
                 priority
             />
-            <div className="text-secondary rounded-lg bg-white p-4">
-                <h2 className="text-xl font-medium">Business Rate Award</h2>
-                <p className="font-semibold uppercase">
-                    Google
-                    <span className="text-base font-normal capitalize">
-                        {" "}
-                        - July 2025
-                    </span>
-                </p>
-            </div>
+            <figcaption className="text-dark flex flex-col items-center gap-1">
+                <span className="eyebrow">Nail Salon Excellence Award</span>
+                <span className="text-sm">BusinessRate · July 2025</span>
+            </figcaption>
         </figure>
     );
 }
-
-export default Award;

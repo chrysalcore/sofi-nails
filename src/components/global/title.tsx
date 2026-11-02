@@ -22,7 +22,7 @@ export default function Title({ isMainTitle }: { isMainTitle?: boolean }) {
         >
             Sofi
             <span
-                className={`text-2xl text-white/80 ${allura.className} ${spanStyles}`}
+                className={`text-2xl text-white/85 ${allura.className} ${spanStyles}`}
             >
                 Nails &amp; Lashes <br />
                 Spa

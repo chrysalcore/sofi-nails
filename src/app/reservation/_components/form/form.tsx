@@ -2,16 +2,22 @@
 
 import { useActionState } from "react";
 import { useSearchParams } from "next/navigation";
+import { Icon } from "@/components/global/icon";
 import { inputsList } from "../../_lib/data/inputs";
-import { sendEmail } from "../../_lib/helper/actions";
+import { sendEmail, type ReservationState } from "../../_lib/helper/actions";
+import { AppointmentCard } from "./appointment-card";
 import Input from "./input";
 
-const initialState = { success: false, error: null };
+const initialState: ReservationState = { status: "idle" };
 
 function Form() {
     const [state, action, isLoading] = useActionState(sendEmail, initialState);
     const searchParams = useSearchParams();
     const defaultSubject = searchParams.get("subject") ?? "";
+
+    if (state.status === "sent") {
+        return <AppointmentCard reservation={state.reservation} />;
+    }
 
     return (
         <form
@@ -29,27 +35,15 @@ function Form() {
             ))}
             <button
                 disabled={isLoading}
-                className="button bg-main flex items-center justify-center gap-2 rounded-2xl fill-white text-white"
+                className="button bg-main flex items-center justify-center gap-2 rounded-2xl text-white"
                 type="submit"
             >
-                {isLoading ? "Submiting" : "Submit"}
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width={28}
-                    height={28}
-                    viewBox="0 -960 960 960"
-                >
-                    <path d="M646-440H200q-17 0-28.5-11.5T160-480q0-17 11.5-28.5T200-520h446L532-634q-12-12-11.5-28t11.5-28q12-12 28.5-12.5T589-691l183 183q6 6 8.5 13t2.5 15q0 8-2.5 15t-8.5 13L589-269q-12 12-28.5 11.5T532-270q-11-12-11.5-28t11.5-28l114-114Z" />
-                </svg>
+                {isLoading ? "Submitting" : "Submit"}
+                <Icon name="send" className="size-5" />
             </button>
-            {state.error && (
-                <p className="bg-main/50 border-main/70 flex justify-center rounded-lg border p-4 text-center text-white">
+            {state.status === "error" && (
+                <p className="bg-danger/10 border-danger/60 text-danger flex justify-center rounded-lg border p-4 text-center">
                     {state.error}
-                </p>
-            )}
-            {state.success && (
-                <p className="flex justify-center rounded-lg border border-emerald-700/70 bg-emerald-200/50 p-4 text-center text-emerald-700">
-                    Email sended successfully
                 </p>
             )}
         </form>

@@ -11,11 +11,9 @@ export default function CategoriesList() {
                     <Category {...value} key={value.path} />
                 ))}
             </ul>
-            <div className="bg-main/15 border-main/30 flex flex-col items-center self-stretch rounded-2xl border p-8 text-center">
-                <h3 className="text-main text-xl font-semibold uppercase">
-                    Important!
-                </h3>
-                <strong className="text-main/80 max-w-160 font-normal">
+            <div className="animate-reveal bg-secondary/15 border-secondary/40 flex flex-col items-center self-stretch rounded-2xl border p-8 text-center">
+                <h3 className="text-dark eyebrow">Important!</h3>
+                <strong className="text-dark/80 max-w-160 font-normal">
                     Please note that all hair removal prices listed are per
                     session, and multiple sessions are typically required for
                     optimal results; package discounts are available for

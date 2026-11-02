@@ -1,5 +1,5 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { render, screen, fireEvent, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Resend } from "resend";
 import Form from "@/app/reservation/_components/form/form";
@@ -15,10 +15,16 @@ vi.mock("next/navigation", () => ({
 }));
 
 beforeEach(() => {
+    vi.useFakeTimers({ toFake: ["Date"] });
+    vi.setSystemTime(new Date("2026-11-01T12:00:00Z"));
     vi.mocked(Resend).mockImplementation(function () {
         return { emails: { send: mockSend } } as unknown as Resend;
     });
     mockSend.mockResolvedValue({ data: { id: "email_123" }, error: null });
+});
+
+afterEach(() => {
+    vi.useRealTimers();
 });
 
 async function fillValidForm() {
@@ -31,7 +37,7 @@ async function fillValidForm() {
         "sofi@example.com",
     );
     fireEvent.change(screen.getByPlaceholderText("01/01/2000"), {
-        target: { value: "2026-08-09T10:00" },
+        target: { value: "2026-11-03T10:00" },
     });
     await userEvent.type(
         screen.getByPlaceholderText("Manicure"),
@@ -44,17 +50,25 @@ async function fillValidForm() {
 }
 
 describe("Form", () => {
-    it("sends the email and shows a success message", async () => {
+    it("sends the email and replaces the form with the filled appointment card", async () => {
         render(<Form />);
 
         await fillValidForm();
         await userEvent.click(screen.getByRole("button", { name: /submit/i }));
 
+        const card = await screen.findByRole("status", {
+            name: "Appointment request sent",
+        });
+        expect(within(card).getByText("Sofi Perez")).toBeInTheDocument();
+        expect(within(card).getByText("Nail appointment")).toBeInTheDocument();
+        expect(within(card).getByText("Tue, November 3")).toBeInTheDocument();
+        expect(within(card).getByText("10:00 AM")).toBeInTheDocument();
         expect(
-            await screen.findByText("Email sended successfully"),
-        ).toBeInTheDocument();
+            screen.queryByRole("button", { name: /submit/i }),
+        ).not.toBeInTheDocument();
         expect(mockSend).toHaveBeenCalledTimes(1);
         const call = mockSend.mock.calls[0][0];
+        expect(call.to).toBe("delivered@resend.dev");
         expect(call.replyTo).toBe("sofi@example.com");
         expect(call.subject).toBe("Nail appointment");
     });

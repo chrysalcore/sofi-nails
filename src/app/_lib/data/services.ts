@@ -59,13 +59,13 @@ export const serviceList: Service[] = [
         ],
     },
     {
-        category: categories.get("browns") as Category,
+        category: categories.get("brows") as Category,
         services: [
             {
                 img: "brown1.webp",
                 info: [
                     {
-                        name: "Powders Browns",
+                        name: "Powder Brows",
                         price: "350",
                     },
                     {
@@ -189,7 +189,7 @@ export const serviceList: Service[] = [
                 img: "face4.webp",
                 info: [
                     {
-                        name: "High Frecuency Treatment",
+                        name: "High Frequency Treatment",
                         price: "100",
                     },
                 ],
